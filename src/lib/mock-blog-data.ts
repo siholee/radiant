@@ -261,6 +261,10 @@ export async function getPostsForFeed() {
   return { data: mockPosts }
 }
 
+export async function getAllPostSlugs() {
+  return mockPosts.map((post) => post.slug)
+}
+
 // Mock image URL generator (replaces Sanity's image helper)
 export function getMockImageUrl(
   imageRef?: { asset: { _ref: string; _type: string }; alt?: string } | string,

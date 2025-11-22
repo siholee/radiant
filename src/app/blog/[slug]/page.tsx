@@ -5,11 +5,18 @@ import { GradientBackground } from '@/components/gradient'
 import { Link } from '@/components/link'
 import { Navbar } from '@/components/navbar'
 import { Heading, Subheading } from '@/components/text'
-import { getMockImageUrl, getPost, type Block, type BlockChild } from '@/lib/mock-blog-data'
+import { getAllPostSlugs, getMockImageUrl, getPost, type Block, type BlockChild } from '@/lib/mock-blog-data'
 import { ChevronLeftIcon } from '@heroicons/react/16/solid'
 import dayjs from 'dayjs'
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
+
+export async function generateStaticParams() {
+  const slugs = await getAllPostSlugs()
+  return slugs.map((slug) => ({
+    slug,
+  }))
+}
 
 export async function generateMetadata({
   params,

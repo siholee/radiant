@@ -268,21 +268,10 @@ async function Pagination({
   )
 }
 
-export default async function Blog({
-  searchParams,
-}: {
-  searchParams: Promise<{ [key: string]: string | string[] | undefined }>
-}) {
-  let params = await searchParams
-  let page =
-    'page' in params
-      ? typeof params.page === 'string' && parseInt(params.page) > 1
-        ? parseInt(params.page)
-        : notFound()
-      : 1
-
-  let category =
-    typeof params.category === 'string' ? params.category : undefined
+export default async function Blog() {
+  // For static export, default to page 1 with no category filter
+  let page = 1
+  let category: string | undefined = undefined
 
   return (
     <main className="overflow-hidden">

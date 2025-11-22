@@ -489,16 +489,9 @@ function FrequentlyAskedQuestions() {
   )
 }
 
-export default async function Pricing({
-  searchParams,
-}: {
-  searchParams: Promise<{ [key: string]: string | string[] | undefined }>
-}) {
-  let params = await searchParams
-  let tier =
-    typeof params.tier === 'string'
-      ? tiers.find(({ slug }) => slug === params.tier)!
-      : tiers[0]
+export default async function Pricing() {
+  // For static export, default to first tier
+  let tier = tiers[0]
 
   return (
     <main className="overflow-hidden">
