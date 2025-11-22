@@ -11,6 +11,7 @@ import {
   getMockImageUrl,
   getPosts,
   getPostsCount,
+  type Post,
 } from '@/lib/mock-blog-data'
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
 import {
@@ -45,7 +46,7 @@ async function FeaturedPosts() {
       <Container>
         <h2 className="text-2xl font-medium tracking-tight">Featured</h2>
         <div className="mt-6 grid grid-cols-1 gap-8 lg:grid-cols-3">
-          {featuredPosts.map((post) => (
+          {featuredPosts.map((post: Post) => (
             <div
               key={post.slug}
               className="relative flex flex-col rounded-3xl bg-white p-2 shadow-md ring-1 shadow-black/5 ring-black/5"

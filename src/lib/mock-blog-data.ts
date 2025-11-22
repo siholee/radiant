@@ -15,6 +15,17 @@ export interface Category {
   slug: string
 }
 
+export interface BlockChild {
+  text: string
+  _type: string
+}
+
+export interface Block {
+  _type: string
+  style?: string
+  children: BlockChild[]
+}
+
 export interface Post {
   _id: string
   title: string
@@ -31,7 +42,7 @@ export interface Post {
     }
     alt?: string
   }
-  body?: any[]
+  body?: Block[]
 }
 
 export const mockCategories: Category[] = [
@@ -213,7 +224,7 @@ export async function getFeaturedPosts(limit: number = 3) {
   return { data: featured }
 }
 
-export async function getPosts(page: number = 1, category?: string) {
+export async function getPosts(start: number = 0, end?: number, category?: string) {
   let posts = [...mockPosts]
 
   if (category) {
@@ -221,10 +232,6 @@ export async function getPosts(page: number = 1, category?: string) {
       post.categories?.some((cat) => cat.slug === category)
     )
   }
-
-  const postsPerPage = 5
-  const start = (page - 1) * postsPerPage
-  const end = start + postsPerPage
 
   return { data: posts.slice(start, end) }
 }
@@ -255,7 +262,11 @@ export async function getPostsForFeed() {
 }
 
 // Mock image URL generator (replaces Sanity's image helper)
-export function getMockImageUrl(imageRef?: any, width?: number, height?: number) {
+export function getMockImageUrl(
+  imageRef?: { asset: { _ref: string; _type: string }; alt?: string } | string,
+  width?: number,
+  height?: number
+) {
   // Return a placeholder image
   const w = width || 800
   const h = height || 600

@@ -5,7 +5,7 @@ import { GradientBackground } from '@/components/gradient'
 import { Link } from '@/components/link'
 import { Navbar } from '@/components/navbar'
 import { Heading, Subheading } from '@/components/text'
-import { getMockImageUrl, getPost } from '@/lib/mock-blog-data'
+import { getMockImageUrl, getPost, type Block, type BlockChild } from '@/lib/mock-blog-data'
 import { ChevronLeftIcon } from '@heroicons/react/16/solid'
 import dayjs from 'dayjs'
 import type { Metadata } from 'next'
@@ -81,25 +81,25 @@ export default async function BlogPost({
               )}
               {post.body && (
                 <div className="prose prose-gray max-w-none">
-                  {post.body.map((block: any, index: number) => {
+                  {post.body.map((block: Block, index: number) => {
                     if (block._type === 'block') {
                       if (block.style === 'h2') {
                         return (
                           <h2 key={index} className="mt-12 mb-10 text-2xl/8 font-medium tracking-tight text-gray-950 first:mt-0 last:mb-0">
-                            {block.children.map((child: any) => child.text).join('')}
+                            {block.children.map((child: BlockChild) => child.text).join('')}
                           </h2>
                         )
                       }
                       if (block.style === 'h3') {
                         return (
                           <h3 key={index} className="mt-12 mb-10 text-xl/8 font-medium tracking-tight text-gray-950 first:mt-0 last:mb-0">
-                            {block.children.map((child: any) => child.text).join('')}
+                            {block.children.map((child: BlockChild) => child.text).join('')}
                           </h3>
                         )
                       }
                       return (
                         <p key={index} className="my-10 text-base/8 first:mt-0 last:mb-0">
-                          {block.children.map((child: any) => child.text).join('')}
+                          {block.children.map((child: BlockChild) => child.text).join('')}
                         </p>
                       )
                     }
