@@ -1,0 +1,62 @@
+{
+  "metadata": {
+    "description": "Radiant helps you sell more by revealing sensitive information about your customers."
+  },
+  "features": {
+    "subheading": "Technology",
+    "heading": "자체개발 플랫폼으로 인하여<br/>빠르고 정확한 서비스 제공"
+  },
+  "solution": {
+    "subheading": "Solution",
+    "heading": "모든 상황을 대비한<br/>맞춤형 올인원 솔루션",
+    "customized": {
+      "eyebrow": "CUSTOMIZED",
+      "title": "완벽한 맞춤형 서비스",
+      "description": "클라이언트의 SNS 운영 주기와 플랫폼 수에 맞춘 유연한 맞춤형 서비스를 제공합니다."
+    },
+    "analysis": {
+      "eyebrow": "Analysis",
+      "title": "AI 기반 키워드 분석",
+      "description": "전용 프롬프트와 AI 툴을 활용해 매일 인기 키워드를 자동 수집하고 분석합니다."
+    },
+    "accuracy": {
+      "eyebrow": "Accuracy",
+      "title": "전문성과 꼼꼼함",
+      "description": "n년차 전문가가 직접 컨텐츠 기획 및 최종 검수까지 합니다."
+    },
+    "limitless": {
+      "eyebrow": "Limitless",
+      "title": "전 플랫폼 대응가능",
+      "description": "네이버 블로그, 카카오 채널, 티스토리, 인스타그램 등 다양한 플랫폼에 맞춘 솔루션 제공"
+    },
+    "adaptive": {
+      "eyebrow": "ADAPTIVE",
+      "title": "실시간 전략 최적화",
+      "description": "트렌드 변화와 알고리즘 업데이트에 즉각 대응하여 전략을 실시간으로 조정합니다."
+    }
+  },
+  "promotion": {
+    "subheading": "Promotion",
+    "heading": "Radient만의 특별한 패키지로<br/>더 큰 혜택을 누리세요",
+    "automation": {
+      "eyebrow": "AUTOMATION",
+      "title": "AI 자동화 시스템 구축",
+      "description": "SNS 마케팅뿐만 아니라 AI 자동화 시스템 구축까지 원스톱으로 대응합니다."
+    },
+    "affordable": {
+      "eyebrow": "AFFORDABLE",
+      "title": "합리적인 비용",
+      "description": "경쟁사 대비 최대 40% 절감된 합리적인 비용으로 전문 서비스를 이용하세요."
+    },
+    "setup": {
+      "eyebrow": "SETUP",
+      "title": "초기 셋업 무료 제공",
+      "description": "계정 개설부터 프로필 최적화까지 초기 SNS 셋업 서비스를 무료로 제공합니다."
+    },
+    "bundle": {
+      "eyebrow": "BUNDLE",
+      "title": "홈페이지 제작 특별 할인",
+      "description": "홈페이지 제작 솔루션 동시 신청 시 패키지 15% 특별 할인 혜택을 받으세요."
+    }
+  }
+}

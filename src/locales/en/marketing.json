@@ -1,0 +1,118 @@
+{
+  "metadata": {
+    "title": "Marketing",
+    "description": "We provide everything for content marketing from blogs, SNS, to videos. Start now."
+  },
+  "header": {
+    "heading": "Content Marketing at Reasonable Prices",
+    "lead": "Choose the plan that's perfect for your business, from blogs to short-form videos.<br/>Grow your brand with high-quality content created by professionals."
+  },
+  "tiers": {
+    "standard": {
+      "name": "Standard",
+      "description": "Basic plan perfect for getting started",
+      "prices": {
+        "blogPost": "Blog Post",
+        "blogPostWithImage": "Blog Post (with images)",
+        "snsCard": "SNS Card Post",
+        "shortVideo": "Short-form Video",
+        "perItem": "/ item",
+        "subtitle1": "2,000+ characters",
+        "subtitle2": "2,000+ characters + 1 thumbnail + 15+ images",
+        "subtitle3": "6+ card images",
+        "subtitle4": "20-40 seconds video"
+      }
+    },
+    "deluxe": {
+      "name": "Deluxe",
+      "description": "All-in-one social marketing management",
+      "prices": {
+        "blogPost": "Blog Post",
+        "blogPostWithImage": "Blog Post (with images)",
+        "snsCard": "SNS Card Post",
+        "shortVideo": "Short-form Video",
+        "perMonth": "/ month",
+        "note": "(4 times)",
+        "subtitle1": "2,000+ characters",
+        "subtitle2": "2,000+ characters + 1 thumbnail + 15+ images",
+        "subtitle3": "6+ card images",
+        "subtitle4": "20-40 seconds video"
+      },
+      "highlight": "*Additional posts can be flexibly adjusted through consultation"
+    },
+    "premium": {
+      "name": "Premium",
+      "description": "Full package solution from videos to advertising",
+      "perMonth": "/ month",
+      "note": "(4 times)",
+      "highlights": {
+        "blogPost": "Blog Post",
+        "blogPostWithImage": "Blog Post (with images)",
+        "snsCard": "SNS Card Post",
+        "shortVideo": "Short-form Video",
+        "subtitle1": "2,000+ characters",
+        "subtitle2": "2,000+ characters + 1 thumbnail + 15+ images",
+        "subtitle3": "6+ card images",
+        "subtitle4": "20-40 seconds video",
+        "additional": "*Additional posts can be flexibly adjusted through consultation",
+        "reward": "*Monthly free or discounted Yurasis service rewards"
+      }
+    }
+  },
+  "features": {
+    "features": "Features",
+    "analysis": "Analysis",
+    "support": "Support",
+    "accounts": "Accounts",
+    "dealProgressBoards": "Deal progress boards",
+    "sourcingPlatforms": "Sourcing platforms",
+    "contacts": "Contacts",
+    "aiAssistedOutreach": "AI assisted outreach",
+    "competitorAnalysis": "Competitor analysis",
+    "dashboardReporting": "Dashboard reporting",
+    "communityInsights": "Community insights",
+    "performanceAnalysis": "Performance analysis",
+    "emailSupport": "Email support",
+    "callCenterSupport": "24 / 7 call center support",
+    "accountManager": "Dedicated account manager",
+    "unlimited": "Unlimited",
+    "perMonth": "/ month"
+  },
+  "testimonial": {
+    "name": "Sue",
+    "role": "Marketing Director",
+    "quote": "I treat it as my own work<br />and have been consistently committed for 6 years.",
+    "credentials": {
+      "education": "Graduate degree in Design, Teaching certificate (Design), GTQ Level 2 Photoshop, ACA certification",
+      "expertise": "Naver Blog Marketing Expert (6 years)",
+      "experience": "Experience in integrated SNS and blog management across various industries including education, beauty, jewelry, study abroad, and medical"
+    },
+    "social": {
+      "naver": "Naver",
+      "youtube": "YouTube",
+      "instagram": "Instagram"
+    }
+  },
+  "faq": {
+    "subheading": "FREQUENTLY ASKED QUESTIONS",
+    "heading": "Frequently Asked Questions",
+    "questions": {
+      "q1": {
+        "question": "The monthly plan says it's based on 4 times. Can I do more?",
+        "answer": "Of course.<br />4 times is the basic number provided, and additional production is possible as needed.<br />We can flexibly adjust according to your brand's marketing goals and budget, so let's work together to create the optimal plan through consultation."
+      },
+      "q2": {
+        "question": "What's the difference between basic blog posting and blog posting with images?",
+        "answer": "Basic blog posting is a service where we write content using images provided by clients.<br />Simple editing or resizing of images is fully possible in the basic plan.<br /><br />Blog posting with images includes everything from thumbnail creation to selecting and inserting appropriate images in the content.<br />Since Yurasis uses commercially licensed images that we officially own and purchase, you can use them safely without copyright concerns.<br />Please refer to the relevant article for details."
+      },
+      "q3": {
+        "question": "Can I use social media not listed in the examples?",
+        "answer": "Absolutely.<br />If it's the same format as specified in the plan (blog, card-type SNS, short-form video, etc.), we can create and manage any platform.<br />You can utilize various channels such as Instagram, Facebook, Naver Blog, YouTube Shorts, and more.<br /><br />If you're curious about which plan a specific platform falls under, please feel free to apply for consultation anytime."
+      },
+      "q4": {
+        "question": "What is the Premium plan's free or discounted Yurasis service reward?",
+        "answer": "Yurasis provides business card and print design services, as well as web page design services, in addition to SNS marketing.<br />Premium plan subscribers receive these services for free or with special discounts according to monthly promotions.<br /><br />You can check the currently ongoing rewards in the announcements."
+      }
+    }
+  }
+}

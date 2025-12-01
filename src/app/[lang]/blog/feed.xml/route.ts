@@ -1,8 +1,13 @@
 import { getMockImageUrl, getPostsForFeed } from '@/lib/mock-blog-data'
+import { locales } from '@/lib/i18n'
 import { Feed } from 'feed'
 import assert from 'node:assert'
 
 export const dynamic = 'force-static'
+
+export async function generateStaticParams() {
+  return locales.map((lang) => ({ lang }))
+}
 
 export async function GET() {
   // Use environment variable or default to localhost for static export

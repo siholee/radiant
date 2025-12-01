@@ -1,0 +1,19 @@
+{
+  "metadata": {
+    "title": "Login",
+    "description": "Sign in to your account to continue."
+  },
+  "heading": "Welcome back!",
+  "description": "Sign in to your account to continue.",
+  "email": {
+    "label": "Email"
+  },
+  "password": {
+    "label": "Password"
+  },
+  "rememberMe": "Remember me",
+  "forgotPassword": "Forgot password?",
+  "signIn": "Sign in",
+  "notMember": "Not a member?",
+  "createAccount": "Create an account"
+}

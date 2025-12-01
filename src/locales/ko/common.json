@@ -1,0 +1,47 @@
+{
+  "nav": {
+    "company": "회사소개",
+    "pricing": "마케팅",
+    "blog": "소식",
+    "login": "로그인"
+  },
+  "footer": {
+    "cta": {
+      "title": "Get started",
+      "heading": "Ready to dive in?",
+      "subheading": "Start your free trial today.",
+      "description": "Get the cheat codes for selling and unlock your team's revenue potential.",
+      "button": "Get started"
+    },
+    "sitemap": {
+      "product": {
+        "title": "Product",
+        "marketing": "Marketing",
+        "analysis": "Analysis",
+        "api": "API"
+      },
+      "company": {
+        "title": "Company",
+        "careers": "Careers",
+        "blog": "Blog",
+        "about": "Company"
+      },
+      "support": {
+        "title": "Support",
+        "helpCenter": "Help center",
+        "community": "Community"
+      },
+      "legal": {
+        "title": "Company",
+        "terms": "Terms of service",
+        "privacy": "Privacy policy"
+      }
+    },
+    "social": {
+      "x": "X",
+      "facebook": "Facebook",
+      "linkedin": "LinkedIn"
+    },
+    "copyright": "© {year} Radiant, Inc."
+  }
+}

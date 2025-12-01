@@ -1,0 +1,62 @@
+{
+  "metadata": {
+    "description": "Radiant helps you sell more by revealing sensitive information about your customers."
+  },
+  "features": {
+    "subheading": "Technology",
+    "heading": "Fast and accurate service<br/>with our proprietary platform"
+  },
+  "solution": {
+    "subheading": "Solution",
+    "heading": "All-in-one solution<br/>tailored for every situation",
+    "customized": {
+      "eyebrow": "CUSTOMIZED",
+      "title": "Perfect Customized Service",
+      "description": "We provide flexible customized services tailored to your SNS operation cycle and platform count."
+    },
+    "analysis": {
+      "eyebrow": "Analysis",
+      "title": "AI-based Keyword Analysis",
+      "description": "Automatically collect and analyze daily trending keywords using dedicated prompts and AI tools."
+    },
+    "accuracy": {
+      "eyebrow": "Accuracy",
+      "title": "Expertise and Thoroughness",
+      "description": "Experts with years of experience directly plan content and perform final reviews."
+    },
+    "limitless": {
+      "eyebrow": "Limitless",
+      "title": "All Platform Support",
+      "description": "Solutions tailored for various platforms including Naver Blog, Kakao Channel, Tistory, Instagram, and more"
+    },
+    "adaptive": {
+      "eyebrow": "ADAPTIVE",
+      "title": "Real-time Strategy Optimization",
+      "description": "Instantly respond to trend changes and algorithm updates to adjust strategies in real-time."
+    }
+  },
+  "promotion": {
+    "subheading": "Promotion",
+    "heading": "Enjoy greater benefits with<br/>Radient's special packages",
+    "automation": {
+      "eyebrow": "AUTOMATION",
+      "title": "AI Automation System",
+      "description": "We provide one-stop solutions from SNS marketing to AI automation system construction."
+    },
+    "affordable": {
+      "eyebrow": "AFFORDABLE",
+      "title": "Reasonable Cost",
+      "description": "Use professional services at a reasonable cost, up to 40% cheaper than competitors."
+    },
+    "setup": {
+      "eyebrow": "SETUP",
+      "title": "Free Initial Setup",
+      "description": "We provide free initial SNS setup services from account creation to profile optimization."
+    },
+    "bundle": {
+      "eyebrow": "BUNDLE",
+      "title": "Website Creation Discount",
+      "description": "Receive a special 15% package discount when applying for website creation solution simultaneously."
+    }
+  }
+}

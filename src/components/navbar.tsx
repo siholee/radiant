@@ -7,20 +7,24 @@ import {
 } from '@headlessui/react'
 import { Bars2Icon } from '@heroicons/react/24/solid'
 import { motion } from 'framer-motion'
+import { useTranslation } from '@/hooks/useTranslation'
+import { useLocale } from '@/contexts/LocaleContext'
+import { LanguageSwitcher, LanguageSwitcherMobile } from './LanguageSwitcher'
 import { Link } from './link'
 import { Logo } from './logo'
-import { PlusGrid, PlusGridItem, PlusGridRow } from './plus-grid'
-
-const links = [
-  { href: '/company', label: '회사소개' },
-  { href: '/marketing', label: '비용안내' },
-  { href: '/blog', label: '소식' },
-  { href: '/login', label: '로그인' },
-]
 
 function DesktopNav() {
+  const { t, locale } = useTranslation('common')
+  
+  const links = [
+    { href: `/${locale}/company`, label: t('nav.company') },
+    { href: `/${locale}/marketing`, label: t('nav.pricing') },
+    { href: `/${locale}/blog`, label: t('nav.blog') },
+    { href: `/${locale}/login`, label: t('nav.login') },
+  ]
+
   return (
-    <nav className="relative hidden lg:flex">
+    <nav className="relative hidden lg:flex items-center gap-2">
       {links.map(({ href, label }) => (
         <Link
           key={href}
@@ -30,6 +34,7 @@ function DesktopNav() {
           {label}
         </Link>
       ))}
+      <LanguageSwitcher />
     </nav>
   )
 }
@@ -46,6 +51,15 @@ function MobileNavButton() {
 }
 
 function MobileNav() {
+  const { t, locale } = useTranslation('common')
+  
+  const links = [
+    { href: `/${locale}/company`, label: t('nav.company') },
+    { href: `/${locale}/marketing`, label: t('nav.pricing') },
+    { href: `/${locale}/blog`, label: t('nav.blog') },
+    { href: `/${locale}/login`, label: t('nav.login') },
+  ]
+
   return (
     <DisclosurePanel className="lg:hidden mt-2">
       <div className="bg-white/80 backdrop-blur-xl rounded-2xl shadow-lg shadow-black/5 ring-1 ring-black/5 px-4 sm:px-6">
@@ -66,6 +80,7 @@ function MobileNav() {
               </Link>
             </motion.div>
           ))}
+          <LanguageSwitcherMobile />
         </div>
       </div>
     </DisclosurePanel>
@@ -73,12 +88,14 @@ function MobileNav() {
 }
 
 export function Navbar({ banner }: { banner?: React.ReactNode }) {
+  const { locale } = useLocale()
+  
   return (
     <Disclosure as="header" className="fixed top-4 left-4 right-4 z-50 mx-auto max-w-7xl">
       <div className="bg-white/80 backdrop-blur-xl rounded-2xl shadow-lg shadow-black/5 ring-1 ring-black/5 px-4 sm:px-6 lg:px-8 py-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-6">
-            <Link href="/" title="Home" className="flex items-center">
+            <Link href={`/${locale}`} title="Home" className="flex items-center">
               <Logo className="h-9" />
             </Link>
             {banner && (
