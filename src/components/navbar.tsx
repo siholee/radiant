@@ -13,7 +13,7 @@ import { PlusGrid, PlusGridItem, PlusGridRow } from './plus-grid'
 
 const links = [
   { href: '/company', label: '회사소개' },
-  { href: '/pricing', label: '비용안내' },
+  { href: '/marketing', label: '비용안내' },
   { href: '/blog', label: '소식' },
   { href: '/login', label: '로그인' },
 ]
