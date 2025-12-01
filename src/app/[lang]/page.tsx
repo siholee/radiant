@@ -165,7 +165,7 @@ export default function Home() {
   const { t } = useTranslation('home')
   
   useEffect(() => {
-    document.title = `Radiant - ${t('metadata.description')}`
+    document.title = `Yurasis - ${t('metadata.description')}`
     const metaDescription = document.querySelector('meta[name="description"]')
     if (metaDescription) {
       metaDescription.setAttribute('content', t('metadata.description'))

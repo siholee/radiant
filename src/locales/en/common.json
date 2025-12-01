@@ -1,8 +1,7 @@
 {
   "nav": {
-    "company": "Company",
+    "company": "Web Builder",
     "pricing": "Marketing",
-    "blog": "Blog",
     "login": "Login"
   },
   "footer": {
@@ -23,7 +22,6 @@
       "company": {
         "title": "Company",
         "careers": "Careers",
-        "blog": "Blog",
         "about": "Company"
       },
       "support": {
@@ -42,6 +40,6 @@
       "facebook": "Facebook",
       "linkedin": "LinkedIn"
     },
-    "copyright": "© {year} Radiant, Inc."
+    "copyright": "© {year} Yurasis, Inc."
   }
 }

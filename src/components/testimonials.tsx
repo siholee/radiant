@@ -159,7 +159,7 @@ function CallToAction() {
   return (
     <div>
       <p className="max-w-sm text-sm/6 text-gray-600">
-        Join the best sellers in the business and start using Radiant to hit
+        Join the best sellers in the business and start using Yurasis to hit
         your targets today.
       </p>
       <div className="mt-2">

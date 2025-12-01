@@ -17,9 +17,8 @@ function DesktopNav() {
   const { t, locale } = useTranslation('common')
   
   const links = [
-    { href: `/${locale}/company`, label: t('nav.company') },
+    { href: `/${locale}/build`, label: t('nav.company') },
     { href: `/${locale}/marketing`, label: t('nav.pricing') },
-    { href: `/${locale}/blog`, label: t('nav.blog') },
     { href: `/${locale}/login`, label: t('nav.login') },
   ]
 
@@ -54,9 +53,8 @@ function MobileNav() {
   const { t, locale } = useTranslation('common')
   
   const links = [
-    { href: `/${locale}/company`, label: t('nav.company') },
+    { href: `/${locale}/build`, label: t('nav.company') },
     { href: `/${locale}/marketing`, label: t('nav.pricing') },
-    { href: `/${locale}/blog`, label: t('nav.blog') },
     { href: `/${locale}/login`, label: t('nav.login') },
   ]
 

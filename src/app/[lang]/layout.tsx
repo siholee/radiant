@@ -18,14 +18,17 @@ export async function generateMetadata({
 
   return {
     title: {
-      template: '%s - Radiant',
-      default: 'Radiant - Close every deal',
+      template: '%s - Yurasis',
+      default: 'Yurasis - Close every deal',
     },
     alternates: {
       languages: {
         ko: '/ko',
         en: '/en',
       },
+    },
+    other: {
+      'google-fonts': 'https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap',
     },
   }
 }
@@ -46,30 +49,10 @@ export default async function LangLayout({
   }
 
   return (
-    <html lang={locale}>
-      <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link
-          rel="preconnect"
-          href="https://fonts.gstatic.com"
-          crossOrigin="anonymous"
-        />
-        <link
-          rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap"
-        />
-        <link
-          rel="alternate"
-          type="application/rss+xml"
-          title="The Radiant Blog"
-          href="/blog/feed.xml"
-        />
-      </head>
-      <body className="text-gray-950 antialiased">
-        <LocaleProvider initialLocale={locale as Locale}>
-          {children}
-        </LocaleProvider>
-      </body>
-    </html>
+    <LocaleProvider initialLocale={locale as Locale}>
+      <div className="text-gray-950 antialiased">
+        {children}
+      </div>
+    </LocaleProvider>
   )
 }

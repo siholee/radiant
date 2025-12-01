@@ -1,8 +1,7 @@
 {
   "nav": {
-    "company": "회사소개",
+    "company": "웹 빌더",
     "pricing": "마케팅",
-    "blog": "소식",
     "login": "로그인"
   },
   "footer": {
@@ -23,7 +22,6 @@
       "company": {
         "title": "Company",
         "careers": "Careers",
-        "blog": "Blog",
         "about": "Company"
       },
       "support": {
@@ -42,6 +40,6 @@
       "facebook": "Facebook",
       "linkedin": "LinkedIn"
     },
-    "copyright": "© {year} Radiant, Inc."
+    "copyright": "© {year} Yurasis, Inc."
   }
 }
