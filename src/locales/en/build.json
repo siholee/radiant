@@ -1,0 +1,120 @@
+{
+  "metadata": {
+    "title": "Build - Radiant",
+    "description": "Website development service pricing"
+  },
+  "header": {
+    "heading": "Website Development Service",
+    "lead": "We provide <strong>customized website development solutions</strong> tailored to your brand's scale and needs."
+  },
+  "tiers": {
+    "standard": {
+      "description": "Essential solution for small brands",
+      "highlights": {
+        "pages": "Basic page structure",
+        "pagesDetail": "Main 1P + Sub 3-4P (Total 4-5 pages)",
+        "sections": "Core section development",
+        "sectionsDetail": "Hero, About, Services, Portfolio, Contact, etc. (4-5 sections per page)",
+        "responsive": "Responsive design",
+        "responsiveDetail": "Optimized for PC, Tablet, and Mobile",
+        "seo": "Basic SEO setup",
+        "seoDetail": "Basic settings for search engine visibility",
+        "note": "*Additional pages and features can be flexibly adjusted through consultation"
+      }
+    },
+    "deluxe": {
+      "description": "Complete solution for regular businesses",
+      "price": "1,500,000",
+      "highlights": {
+        "pages": "Extended page structure",
+        "pagesDetail": "Main 1P + Sub 8-14P (Total 9-15 pages)",
+        "board": "Board system",
+        "boardDetail": "Includes Notice, Gallery, Blog categories (5 sections per page)",
+        "admin": "Admin page",
+        "adminDetail": "CMS functionality for self-editing content",
+        "seo": "Advanced SEO & Analytics",
+        "seoDetail": "GA4 integration and keyword optimization",
+        "note": "*Additional pages and features can be flexibly adjusted through consultation"
+      }
+    },
+    "premium": {
+      "description": "Full package solution with distinctive features",
+      "price": "2,000,000",
+      "highlights": {
+        "pages": "Premium page structure",
+        "pagesDetail": "Main 1P + Sub ~20P (Total 20-25 pages)",
+        "custom": "Advanced custom features",
+        "customDetail": "Multi-language, Booking system, Member registration, Payment integration, etc. (5 sections per page)",
+        "brand": "Brand identity design",
+        "brandDetail": "Custom design + Interactive elements",
+        "maintenance": "Premium maintenance",
+        "maintenanceDetail": "6 months free maintenance + Monthly content update",
+        "note1": "*Custom quotes provided through consultation based on project scale",
+        "note2": "*Discounted annual hosting and domain management service"
+      }
+    }
+  },
+  "testimonial": {
+    "name": "Siho Lee",
+    "role": "Marketing Director",
+    "quote": "Treating it as my own business,<br />working with consistency for 6 years.",
+    "credentials": {
+      "education": "Keio University, Faculty of Environment and Information Studies",
+      "expertise": "Frontend Development Specialist (2 years experience)",
+      "experience": "Website, platform, and application development and maintenance experience"
+    },
+    "social": {
+      "naver": "Naver",
+      "youtube": "YouTube",
+      "instagram": "Instagram"
+    }
+  },
+  "features": [
+    {
+      "name": "Rapid Development",
+      "description": "Build websites quickly using proven templates and components."
+    },
+    {
+      "name": "Responsive Design",
+      "description": "Deliver responsive websites that work perfectly on all devices."
+    },
+    {
+      "name": "SEO Optimization",
+      "description": "Apply the latest SEO techniques for top search engine rankings."
+    },
+    {
+      "name": "Enhanced Security",
+      "description": "Protect customer data and websites with cutting-edge security technologies."
+    },
+    {
+      "name": "Performance Optimization",
+      "description": "Provide optimization for fast loading speeds and excellent user experience."
+    },
+    {
+      "name": "Continuous Support",
+      "description": "Offer technical support for stable operations even after project completion."
+    }
+  ],
+  "faq": {
+    "subheading": "Frequently Asked Questions",
+    "heading": "Do you have any questions?",
+    "questions": {
+      "q1": {
+        "question": "How long does website development take?",
+        "answer": "It depends on the project scale, but typically <strong>STANDARD</strong> takes 2-3 weeks, <strong>DELUXE</strong> takes 4-6 weeks, and <strong>PREMIUM</strong> takes 6-8 weeks."
+      },
+      "q2": {
+        "question": "Are there any additional costs?",
+        "answer": "If additional features or pages beyond the basic package are needed, quotes will be provided through separate consultation. All additional costs will be communicated in advance."
+      },
+      "q3": {
+        "question": "Can I make revisions after development?",
+        "answer": "All plans include <strong>2-3 revision opportunities</strong> during the development process, and post-completion modifications are possible through maintenance services."
+      },
+      "q4": {
+        "question": "How are domain and hosting handled?",
+        "answer": "You can prepare them yourself, or we can arrange and set them up for you. Details will be provided through consultation."
+      }
+    }
+  }
+}

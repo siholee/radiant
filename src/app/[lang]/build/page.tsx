@@ -1,13 +1,9 @@
 'use client'
 
-import { BentoCard } from '@/components/bento-card'
 import { Container } from '@/components/container'
 import { Footer } from '@/components/footer'
 import { Gradient, GradientBackground } from '@/components/gradient'
-import { Keyboard } from '@/components/keyboard'
 import { LogoCloud } from '@/components/logo-cloud'
-import { LogoCluster } from '@/components/logo-cluster'
-import { Map } from '@/components/map'
 import { Navbar } from '@/components/navbar'
 import { Heading, Lead, Subheading } from '@/components/text'
 import { useTranslation } from '@/hooks/useTranslation'
@@ -36,7 +32,7 @@ type Tier = {
 }
 
 function Header() {
-  const { t } = useTranslation('marketing')
+  const { t } = useTranslation('build')
   
   return (
     <Container className="mt-16">
@@ -47,7 +43,7 @@ function Header() {
 }
 
 function PricingCards() {
-  const { t, locale } = useTranslation('marketing')
+  const { t, locale } = useTranslation('build')
   
   const isKorean = locale === 'ko'
   
@@ -56,51 +52,49 @@ function PricingCards() {
       name: 'Standard' as const,
       slug: 'standard',
       description: t('tiers.standard.description'),
-      priceMonthly: null,
+      priceMonthly: isKorean ? 800000 : 800000,
       priceUnit: null,
-      prices: [
-        { label: t('tiers.standard.prices.blogPost'), amount: isKorean ? 30000 : 20, unit: t('tiers.standard.prices.perItem'), subtitle: t('tiers.standard.prices.subtitle1') },
-        { label: t('tiers.standard.prices.blogPostWithImage'), amount: isKorean ? 50000 : 30, unit: t('tiers.standard.prices.perItem'), subtitle: t('tiers.standard.prices.subtitle2') },
-        { label: t('tiers.standard.prices.snsCard'), amount: isKorean ? 70000 : 45, unit: t('tiers.standard.prices.perItem'), subtitle: t('tiers.standard.prices.subtitle3') },
-        { label: t('tiers.standard.prices.shortVideo'), amount: isKorean ? 100000 : 65, unit: t('tiers.standard.prices.perItem'), subtitle: t('tiers.standard.prices.subtitle4') },
-      ],
+      prices: [],
       href: '#',
-      highlights: [],
+      highlights: [
+        { description: t('tiers.standard.highlights.pages'), subtitle: t('tiers.standard.highlights.pagesDetail') },
+        { description: t('tiers.standard.highlights.sections'), subtitle: t('tiers.standard.highlights.sectionsDetail') },
+        { description: t('tiers.standard.highlights.responsive'), subtitle: t('tiers.standard.highlights.responsiveDetail') },
+        { description: t('tiers.standard.highlights.seo'), subtitle: t('tiers.standard.highlights.seoDetail') },
+        { description: t('tiers.standard.highlights.note') },
+      ],
     },
     {
       name: 'Deluxe' as const,
       slug: 'deluxe',
       description: t('tiers.deluxe.description'),
-      priceMonthly: null,
+      priceMonthly: isKorean ? 1500000 : 1500000,
       priceUnit: null,
-      prices: [
-        { label: t('tiers.deluxe.prices.blogPost'), amount: isKorean ? 100000 : 65, originalAmount: isKorean ? 120000 : 80, unit: t('tiers.deluxe.prices.perMonth'), note: t('tiers.deluxe.prices.note'), subtitle: t('tiers.deluxe.prices.subtitle1') },
-        { label: t('tiers.deluxe.prices.blogPostWithImage'), amount: isKorean ? 150000 : 100, originalAmount: isKorean ? 200000 : 120, unit: t('tiers.deluxe.prices.perMonth'), note: t('tiers.deluxe.prices.note'), subtitle: t('tiers.deluxe.prices.subtitle2') },
-        { label: t('tiers.deluxe.prices.snsCard'), amount: isKorean ? 200000 : 130, originalAmount: isKorean ? 280000 : 180, unit: t('tiers.deluxe.prices.perMonth'), note: t('tiers.deluxe.prices.note'), subtitle: t('tiers.deluxe.prices.subtitle3') },
-        { label: t('tiers.deluxe.prices.shortVideo'), amount: isKorean ? 350000 : 230, originalAmount: isKorean ? 400000 : 260, unit: t('tiers.deluxe.prices.perMonth'), note: t('tiers.deluxe.prices.note'), subtitle: t('tiers.deluxe.prices.subtitle4') },
-      ],
+      prices: [],
       href: '#',
       highlights: [
-        { description: t('tiers.deluxe.highlight') },
+        { description: t('tiers.deluxe.highlights.pages'), subtitle: t('tiers.deluxe.highlights.pagesDetail') },
+        { description: t('tiers.deluxe.highlights.board'), subtitle: t('tiers.deluxe.highlights.boardDetail') },
+        { description: t('tiers.deluxe.highlights.admin'), subtitle: t('tiers.deluxe.highlights.adminDetail') },
+        { description: t('tiers.deluxe.highlights.seo'), subtitle: t('tiers.deluxe.highlights.seoDetail') },
+        { description: t('tiers.deluxe.highlights.note') },
       ],
     },
     {
       name: 'Premium' as const,
       slug: 'premium',
       description: t('tiers.premium.description'),
-      priceMonthly: isKorean ? 500000 : 333,
-      originalPrice: isKorean ? 700000 : 560,
-      priceUnit: t('tiers.premium.perMonth'),
-      priceNote: t('tiers.premium.note'),
+      priceMonthly: isKorean ? 2000000 : 2000000,
+      priceUnit: null,
       prices: [],
       href: '#',
       highlights: [
-        { description: t('tiers.premium.highlights.blogPost'), subtitle: t('tiers.premium.highlights.subtitle1') },
-        { description: t('tiers.premium.highlights.blogPostWithImage'), subtitle: t('tiers.premium.highlights.subtitle2') },
-        { description: t('tiers.premium.highlights.snsCard'), subtitle: t('tiers.premium.highlights.subtitle3') },
-        { description: t('tiers.premium.highlights.shortVideo'), subtitle: t('tiers.premium.highlights.subtitle4') },
-        { description: t('tiers.premium.highlights.additional') },
-        { description: t('tiers.premium.highlights.reward') },
+        { description: t('tiers.premium.highlights.pages'), subtitle: t('tiers.premium.highlights.pagesDetail') },
+        { description: t('tiers.premium.highlights.custom'), subtitle: t('tiers.premium.highlights.customDetail') },
+        { description: t('tiers.premium.highlights.brand'), subtitle: t('tiers.premium.highlights.brandDetail') },
+        { description: t('tiers.premium.highlights.maintenance'), subtitle: t('tiers.premium.highlights.maintenanceDetail') },
+        { description: t('tiers.premium.highlights.note1') },
+        { description: t('tiers.premium.highlights.note2') },
       ],
     },
   ]
@@ -192,6 +186,7 @@ function PricingCard({ tier, locale }: { tier: Tier; locale: string }) {
                   const isNote = highlight.description.startsWith('*')
                   const prevItems = tier.highlights.slice(0, index)
                   const isFirstNote = isNote && !prevItems.some(item => item.description.startsWith('*'))
+                  const shouldAddStandardSpacing = isNote && tier.slug === 'standard' && isFirstNote
                   const shouldAddDeluxeSpacing = isNote && tier.slug === 'deluxe'
                   const shouldAddPremiumSpacing = isNote && tier.slug === 'premium' && isFirstNote
                   const isPremiumService = tier.slug === 'premium' && !isNote
@@ -199,7 +194,7 @@ function PricingCard({ tier, locale }: { tier: Tier; locale: string }) {
                   return (
                     <li
                       key={index}
-                      className={`flex items-start gap-4 text-sm/6 ${shouldAddDeluxeSpacing ? 'mt-6' : ''} ${shouldAddPremiumSpacing ? 'mt-10' : ''} ${isPremiumService ? 'text-gray-950' : 'text-gray-950/75'}`}
+                      className={`flex items-start gap-4 text-sm/6 ${shouldAddStandardSpacing ? 'mt-6' : ''} ${shouldAddDeluxeSpacing ? 'mt-6' : ''} ${shouldAddPremiumSpacing ? 'mt-10' : ''} ${isPremiumService ? 'text-gray-950' : 'text-gray-950/75'}`}
                     >
                       {!isNote && (
                         <span className="inline-flex h-6 items-center">
@@ -233,70 +228,65 @@ function PlusIcon(props: React.ComponentPropsWithoutRef<'svg'>) {
 }
 
 function BentoSection() {
-  const { t } = useTranslation('home')
+  const { t: tHome } = useTranslation('home')
+  const { t: tBuild } = useTranslation('build')
+  
+  const features = [
+    {
+      name: tBuild('features.0.name'),
+      description: tBuild('features.0.description'),
+    },
+    {
+      name: tBuild('features.1.name'),
+      description: tBuild('features.1.description'),
+    },
+    {
+      name: tBuild('features.2.name'),
+      description: tBuild('features.2.description'),
+    },
+    {
+      name: tBuild('features.3.name'),
+      description: tBuild('features.3.description'),
+    },
+    {
+      name: tBuild('features.4.name'),
+      description: tBuild('features.4.description'),
+    },
+    {
+      name: tBuild('features.5.name'),
+      description: tBuild('features.5.description'),
+    },
+  ]
   
   return (
     <Container>
-      <Subheading>{t('solution.subheading')}</Subheading>
+      <Subheading>{tHome('solution.subheading')}</Subheading>
       <Heading 
         as="h3" 
         className="mt-2 max-w-3xl"
-        dangerouslySetInnerHTML={{ __html: t('solution.heading') }}
+        dangerouslySetInnerHTML={{ __html: tHome('solution.heading') }}
       />
-
-      <div className="mt-10 grid grid-cols-1 gap-4 sm:mt-16 lg:grid-cols-6 lg:grid-rows-2">
-        <BentoCard
-          eyebrow={t('solution.customized.eyebrow')}
-          title={t('solution.customized.title')}
-          description={t('solution.customized.description')}
-          graphic={
-            <div className="h-80 bg-[url(/screenshots/profile.png)] bg-size-[1000px_560px] bg-position-[left_-109px_top_-112px] bg-no-repeat" />
-          }
-          fade={['bottom']}
-          className="max-lg:rounded-t-4xl lg:col-span-3 lg:rounded-tl-4xl"
-        />
-        <BentoCard
-          eyebrow={t('solution.analysis.eyebrow')}
-          title={t('solution.analysis.title')}
-          description={t('solution.analysis.description')}
-          graphic={
-            <div className="absolute inset-0 bg-[url(/screenshots/competitors.png)] bg-size-[1100px_650px] bg-position-[left_-38px_top_-73px] bg-no-repeat" />
-          }
-          fade={['bottom']}
-          className="lg:col-span-3 lg:rounded-tr-4xl"
-        />
-        <BentoCard
-          eyebrow={t('solution.accuracy.eyebrow')}
-          title={t('solution.accuracy.title')}
-          description={t('solution.accuracy.description')}
-          graphic={
-            <div className="flex size-full pt-10 pl-10">
-              <Keyboard highlighted={['LeftCommand', 'S']} />
-            </div>
-          }
-          className="lg:col-span-2 lg:rounded-bl-4xl"
-        />
-        <BentoCard
-          eyebrow={t('solution.limitless.eyebrow')}
-          title={t('solution.limitless.title')}
-          description={t('solution.limitless.description')}
-          graphic={<LogoCluster />}
-          className="lg:col-span-2"
-        />
-        <BentoCard
-          eyebrow={t('solution.adaptive.eyebrow')}
-          title={t('solution.adaptive.title')}
-          description={t('solution.adaptive.description')}
-          graphic={<Map />}
-          className="max-lg:rounded-b-4xl lg:col-span-2 lg:rounded-br-4xl"
-        />
-      </div>
+      
+      <dl className="mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-8 text-base/7 text-gray-600 sm:grid-cols-2 lg:mx-0 lg:max-w-none lg:grid-cols-3 lg:gap-x-16">
+        {features.map((feature, index) => (
+          <div key={index} className="relative pl-9">
+            <dt className="inline font-semibold text-gray-950">
+              <PlusIcon
+                aria-hidden="true"
+                className="absolute left-1 top-1 size-5 fill-gray-950/25"
+              />
+              {feature.name}
+            </dt>{' '}
+            <dd className="inline text-gray-950/75">{feature.description}</dd>
+          </div>
+        ))}
+      </dl>
     </Container>
   )
 }
 
 function Testimonial() {
-  const { t } = useTranslation('marketing')
+  const { t } = useTranslation('build')
   
   return (
     <div className="mx-2 my-24 rounded-4xl bg-gray-900 bg-[url(/dot-texture.svg)] pt-72 pb-24 lg:pt-36">
@@ -396,7 +386,7 @@ function Testimonial() {
 }
 
 function FrequentlyAskedQuestions() {
-  const { t } = useTranslation('marketing')
+  const { t } = useTranslation('build')
   
   return (
     <Container>
@@ -439,7 +429,7 @@ function FrequentlyAskedQuestions() {
 }
 
 export default function Build() {
-  const { t } = useTranslation('marketing')
+  const { t } = useTranslation('build')
   
   useEffect(() => {
     document.title = t('metadata.title')

@@ -1,52 +1,335 @@
 # Radiant
 
-Radiant is a [Tailwind Plus](https://tailwindcss.com/plus) site template built using [Tailwind CSS](https://tailwindcss.com) and [Next.js](https://nextjs.org), with a blog powered by [Sanity](https://www.sanity.io).
+Yurasis company website built with Next.js, Apollo GraphQL, PostgreSQL, and Docker. Features AI-powered blog generation with CrewAI and employee task management.
 
-## Getting started
+## Features
 
-To get started with this template, first install the npm dependencies:
+- 🌐 **Multi-language Support**: Korean and English i18n
+- 🔐 **Dual Authentication**: Cookie-based sessions + JWT token fallback
+- 📝 **AI Blog Generation**: Integrated with CrewAI Python scripts
+- 📊 **GraphQL API**: Apollo Server with full CRUD operations
+- 👥 **Employee Management**: Task assignment and tracking
+- 🐳 **Docker Deployment**: Production-ready containerized setup
+- 🔒 **Secure Middleware**: Role-based access control (ADMIN, EMPLOYEE, USER)
+
+## Tech Stack
+
+- **Frontend**: Next.js 15, React 19, Tailwind CSS, Framer Motion
+- **Backend**: Apollo Server, GraphQL, Prisma ORM
+- **Database**: PostgreSQL 16
+- **Cache**: Redis 7
+- **Authentication**: iron-session, JWT (jose), bcryptjs
+- **AI**: Python 3.11 + CrewAI
+- **Deployment**: Docker, Nginx, Certbot (SSL)
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js 20+ (for local development)
+- Docker & Docker Compose (for production)
+- PostgreSQL 16 (if running locally without Docker)
+
+### Local Development
+
+1. **Install dependencies:**
 
 ```bash
 npm install
 ```
 
-Next, create a new Sanity project to power the blog within this template:
+2. **Set up environment variables:**
 
 ```bash
-npm create sanity@latest -- --env=.env.local --create-project "Radiant Blog" --dataset production
+cp .env.example .env
 ```
 
-This will prompt you to create a new Sanity account if you don't have one already. When asked "Would you like to add configuration files for a Sanity project in this Next.js folder?", choose "n".
+Edit `.env` and configure:
+- `DATABASE_URL`: PostgreSQL connection string
+- `SESSION_SECRET`: 32+ character random string
+- `JWT_SECRET`: 32+ character random string
 
-Next, optionally import the demo seed data for the blog:
+3. **Initialize database:**
 
 ```bash
-npx sanity@latest dataset import seed.tar.gz
+npx prisma generate
+npx prisma db push
 ```
 
-Next, run the development server:
+4. **Run development server:**
 
 ```bash
 npm run dev
 ```
 
-Finally, open [http://localhost:3000](http://localhost:3000) in your browser to view the website.
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-To manage your blog content, visit the embedded Sanity Studio at [http://localhost:3000/studio](http://localhost:3000/studio).
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-## Customizing
+### Docker Deployment (Production)
 
-You can start editing this template by modifying the files in the `/src` folder. The site will auto-update as you edit these files.
+1. **Prepare environment:**
 
-## License
+```bash
+cp .env.example .env
+# Edit .env with production values
+```
 
-This site template is a commercial product and is licensed under the [Tailwind Plus license](https://tailwindcss.com/plus/license).
+Generate secure secrets:
+```bash
+openssl rand -base64 32  # For SESSION_SECRET
+openssl rand -base64 32  # For JWT_SECRET
+```
 
-## Learn more
+2. **Build and run with Docker Compose:**
 
-To learn more about the technologies used in this site template, see the following resources:
+```bash
+docker-compose up -d --build
+```
 
-- [Tailwind CSS](https://tailwindcss.com/docs) - the official Tailwind CSS documentation
-- [Next.js](https://nextjs.org/docs) - the official Next.js documentation
+3. **Initialize database:**
+
+```bash
+docker-compose exec app npx prisma db push
+```
+
+4. **Create admin user:**
+
+```bash
+curl -X POST http://localhost:3000/api/auth/register \
+  -H "Content-Type: application/json" \
+  -d '{"email":"admin@yurasis.com","password":"your-password","name":"Admin","role":"ADMIN"}'
+```
+
+## Vultr Deployment
+
+### Initial Server Setup
+
+1. **Connect to Vultr server:**
+
+```bash
+ssh root@your-vultr-ip
+```
+
+2. **Install dependencies:**
+
+```bash
+apt update && apt upgrade -y
+apt install -y docker.io docker-compose nginx certbot python3-certbot-nginx git
+```
+
+3. **Clone repository:**
+
+```bash
+mkdir -p /var/www
+cd /var/www
+git clone https://github.com/siholee/radiant.git
+cd radiant
+```
+
+4. **Configure environment:**
+
+```bash
+cp .env.example .env
+nano .env  # Edit with production values
+```
+
+5. **Set up Nginx:**
+
+```bash
+cp nginx.conf /etc/nginx/sites-available/yurasis.com
+ln -s /etc/nginx/sites-available/yurasis.com /etc/nginx/sites-enabled/
+nginx -t && systemctl restart nginx
+```
+
+6. **Get SSL certificate:**
+
+```bash
+certbot --nginx -d yurasis.com -d www.yurasis.com
+```
+
+7. **Start application:**
+
+```bash
+./deploy.sh
+```
+
+### Continuous Deployment
+
+Set up GitHub Actions secrets:
+- `VULTR_HOST`: Your server IP
+- `VULTR_USER`: SSH username (usually `root`)
+- `VULTR_SSH_KEY`: Private SSH key
+- `VULTR_SSH_PORT`: SSH port (default: 22)
+
+Push to `main` branch to trigger automatic deployment.
+
+## API Documentation
+
+### Authentication
+
+**Register:**
+```bash
+POST /api/auth/register
+{
+  "email": "user@example.com",
+  "password": "password123",
+  "name": "User Name",
+  "role": "USER"  # or "EMPLOYEE", "ADMIN"
+}
+```
+
+**Login (Cookie Session):**
+```bash
+POST /api/auth/login
+{
+  "email": "user@example.com",
+  "password": "password123"
+}
+```
+
+**Login (JWT Token):**
+```bash
+POST /api/auth/login
+{
+  "email": "user@example.com",
+  "password": "password123",
+  "returnToken": true
+}
+```
+
+**Logout:**
+```bash
+POST /api/auth/logout
+```
+
+**Get Current User:**
+```bash
+GET /api/auth/me
+```
+
+### GraphQL API
+
+Endpoint: `/api/graphql`
+
+**Example Query:**
+```graphql
+query GetBlogPosts {
+  blogPosts(status: PUBLISHED, locale: "ko", limit: 10) {
+    id
+    title
+    slug
+    excerpt
+    publishedAt
+    author {
+      name
+      email
+    }
+  }
+}
+```
+
+**Example Mutation:**
+```graphql
+mutation CreateBlogPost {
+  createBlogPost(input: {
+    title: "New Post"
+    slug: "new-post"
+    content: "Content here..."
+    locale: "ko"
+    tags: ["tech", "ai"]
+  }) {
+    id
+    title
+    slug
+  }
+}
+```
+
+### CrewAI Blog Generation
+
+**Generate Blog Post (Admin Only):**
+```bash
+POST /api/crewai/generate
+Authorization: Bearer <jwt-token>
+{
+  "prompt": "Write a blog post about AI trends",
+  "title": "AI Trends 2024",
+  "locale": "ko",
+  "tags": ["ai", "technology"]
+}
+```
+
+## Python CrewAI Setup
+
+Place your CrewAI script at `python/crewai/blog_generator.py`.
+
+**Expected Input Format:**
+```json
+{
+  "prompt": "Write about...",
+  "title": "Optional title",
+  "locale": "ko",
+  "tags": ["tag1", "tag2"]
+}
+```
+
+**Expected Output Format:**
+```json
+{
+  "title": "Generated Title",
+  "content": "Full markdown content",
+  "excerpt": "Short summary"
+}
+```
+
+## Database Schema
+
+### User
+- `id`, `email`, `password`, `name`, `role`, `createdAt`, `updatedAt`
+
+### BlogPost
+- `id`, `title`, `slug`, `content`, `excerpt`, `coverImage`
+- `status`, `publishedAt`, `locale`, `tags`
+- `generatedBy`, `promptUsed`, `authorId`
+
+### EmployeeTask
+- `id`, `title`, `description`, `status`, `priority`
+- `dueDate`, `completedAt`, `assigneeId`
+
+## Scripts
+
+- `npm run dev` - Start development server
+- `npm run build` - Build for production
+- `npm run start` - Start production server
+- `npx prisma generate` - Generate Prisma Client
+- `npx prisma db push` - Push schema to database
+- `npx prisma studio` - Open Prisma Studio
+- `./deploy.sh` - Deploy on Vultr (requires sudo)
+
+## Project Structure
+
+```
+radiant/
+├── src/
+│   ├── app/              # Next.js App Router
+│   │   ├── [lang]/       # Locale-based routes
+│   │   └── api/          # API routes
+│   ├── components/       # React components
+│   ├── lib/              # Utilities
+│   │   ├── auth/         # Authentication
+│   │   └── prisma.ts     # Database client
+│   ├── graphql/          # GraphQL schema & resolvers
+│   ├── locales/          # i18n translations
+│   └── middleware.ts     # Auth middleware
+├── prisma/
+│   └── schema.prisma     # Database schema
+├── python/
+│   └── crewai/           # Python AI scripts
+├── Dockerfile            # Multi-stage Docker build
+├── docker-compose.yml    # Docker orchestration
+├── nginx.conf            # Nginx configuration
+└── deploy.sh             # Deployment script
+```
 - [Headless UI](https://headlessui.dev) - the official Headless UI documentation
 - [Sanity](https://www.sanity.io) - the Sanity website

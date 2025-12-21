@@ -1,6 +1,6 @@
 import type { Locale } from './config'
 
-export type TranslationPage = 'common' | 'home' | 'marketing' | 'company' | 'blog' | 'login'
+export type TranslationPage = 'common' | 'home' | 'marketing' | 'company' | 'blog' | 'login' | 'build'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type Translations = Record<string, any>
