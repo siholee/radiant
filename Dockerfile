@@ -36,8 +36,8 @@ WORKDIR /app
 
 ENV NODE_ENV=production
 
-# Install Python 3 for executing CrewAI scripts
-RUN apk add --no-cache python3 py3-pip
+# Install Python 3 and OpenSSL for executing CrewAI scripts and Prisma
+RUN apk add --no-cache python3 py3-pip openssl openssl-dev
 
 # Create non-root user
 RUN addgroup --system --gid 1001 nodejs
@@ -50,9 +50,9 @@ COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 
 # Copy Prisma schema and generated client
 COPY --from=builder /app/prisma ./prisma
-COPY --from=builder /app/node_modules/.prisma ./node_modules/.prisma
-COPY --from=builder /app/node_modules/@prisma ./node_modules/@prisma
-COPY --from=builder /app/node_modules/prisma ./node_modules/prisma
+COPY --from=builder --chown=nextjs:nodejs /app/node_modules/.prisma ./node_modules/.prisma
+COPY --from=builder --chown=nextjs:nodejs /app/node_modules/@prisma ./node_modules/@prisma
+COPY --from=builder --chown=nextjs:nodejs /app/node_modules/prisma ./node_modules/prisma
 
 # Copy Python scripts and dependencies
 COPY --from=python-base --chown=nextjs:nodejs /python /app/python
