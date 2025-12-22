@@ -27,6 +27,12 @@ yarn-error.log*
 
 # local env files
 .env*.local
+.env
+
+# Private documentation (not for Git)
+DEPLOYMENT.md
+SECRETS.md
+PRIVATE_*.md
 
 # vercel
 .vercel
