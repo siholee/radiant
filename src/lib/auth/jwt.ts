@@ -2,12 +2,16 @@ import { SignJWT, jwtVerify, type JWTPayload as JoseJWTPayload } from 'jose'
 import type { SessionUser } from './types'
 import type { JWTPayload } from './types'
 
-if (!process.env.JWT_SECRET) {
-  throw new Error('JWT_SECRET must be set in environment variables')
+function getJWTSecret(): Uint8Array {
+  if (!process.env.JWT_SECRET) {
+    throw new Error('JWT_SECRET must be set in environment variables')
+  }
+  return new TextEncoder().encode(process.env.JWT_SECRET)
 }
 
-const JWT_SECRET = new TextEncoder().encode(process.env.JWT_SECRET)
-const JWT_EXPIRES_IN = process.env.JWT_EXPIRES_IN || '7d'
+function getJWTExpiresIn(): string {
+  return process.env.JWT_EXPIRES_IN || '7d'
+}
 
 /**
  * Create a JWT token for a user
@@ -22,8 +26,8 @@ export async function createToken(user: SessionUser): Promise<string> {
   const token = await new SignJWT(payload)
     .setProtectedHeader({ alg: 'HS256' })
     .setIssuedAt()
-    .setExpirationTime(JWT_EXPIRES_IN)
-    .sign(JWT_SECRET)
+    .setExpirationTime(getJWTExpiresIn())
+    .sign(getJWTSecret())
 
   return token
 }
@@ -33,7 +37,7 @@ export async function createToken(user: SessionUser): Promise<string> {
  */
 export async function verifyToken(token: string): Promise<JWTPayload | null> {
   try {
-    const { payload } = await jwtVerify(token, JWT_SECRET)
+    const { payload } = await jwtVerify(token, getJWTSecret())
     // Validate that the payload has our custom fields
     if (
       typeof payload.userId === 'string' &&
