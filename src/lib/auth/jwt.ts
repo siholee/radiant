@@ -1,5 +1,6 @@
-import { SignJWT, jwtVerify } from 'jose'
-import type { JWTPayload, SessionUser } from './types'
+import { SignJWT, jwtVerify, type JWTPayload as JoseJWTPayload } from 'jose'
+import type { SessionUser } from './types'
+import type { JWTPayload } from './types'
 
 if (!process.env.JWT_SECRET) {
   throw new Error('JWT_SECRET must be set in environment variables')
@@ -12,7 +13,7 @@ const JWT_EXPIRES_IN = process.env.JWT_EXPIRES_IN || '7d'
  * Create a JWT token for a user
  */
 export async function createToken(user: SessionUser): Promise<string> {
-  const payload: JWTPayload = {
+  const payload: JoseJWTPayload & JWTPayload = {
     userId: user.id,
     email: user.email,
     role: user.role,
@@ -33,7 +34,21 @@ export async function createToken(user: SessionUser): Promise<string> {
 export async function verifyToken(token: string): Promise<JWTPayload | null> {
   try {
     const { payload } = await jwtVerify(token, JWT_SECRET)
-    return payload as JWTPayload
+    // Validate that the payload has our custom fields
+    if (
+      typeof payload.userId === 'string' &&
+      typeof payload.email === 'string' &&
+      typeof payload.role === 'string'
+    ) {
+      return {
+        userId: payload.userId,
+        email: payload.email,
+        role: payload.role as JWTPayload['role'],
+        iat: payload.iat,
+        exp: payload.exp,
+      }
+    }
+    return null
   } catch (error) {
     console.error('JWT verification failed:', error)
     return null

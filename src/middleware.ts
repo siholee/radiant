@@ -52,7 +52,7 @@ export async function middleware(request: NextRequest) {
   // Strategy 1: Try cookie-based session first
   try {
     const response = NextResponse.next()
-    const session = await getIronSession<SessionData>(request.cookies, response.cookies, sessionOptions)
+    const session = await getIronSession<SessionData>(request, response, sessionOptions)
     
     if (session.isLoggedIn && session.user) {
       user = session.user

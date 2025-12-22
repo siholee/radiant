@@ -13,8 +13,7 @@ export async function generateMetadata({
 }: {
   params: Promise<{ lang: string }>
 }): Promise<Metadata> {
-  const { lang } = await params
-  const locale = lang as Locale
+  await params // Consume params to satisfy Next.js
 
   return {
     title: {
@@ -41,15 +40,14 @@ export default async function LangLayout({
   params: Promise<{ lang: string }>
 }) {
   const { lang } = await params
-  const locale = lang
 
   // Validate locale
-  if (!isValidLocale(locale)) {
+  if (!isValidLocale(lang)) {
     notFound()
   }
 
   return (
-    <LocaleProvider initialLocale={locale as Locale}>
+    <LocaleProvider initialLocale={lang as Locale}>
       <div className="text-gray-950 antialiased">
         {children}
       </div>

@@ -1,7 +1,5 @@
 'use client'
 
-import * as Headless from '@headlessui/react'
-import { ArrowLongRightIcon } from '@heroicons/react/20/solid'
 import { clsx } from 'clsx'
 import {
   MotionValue,
@@ -11,10 +9,9 @@ import {
   useSpring,
   type HTMLMotionProps,
 } from 'framer-motion'
-import { useCallback, useLayoutEffect, useRef, useState } from 'react'
+import { useCallback, useLayoutEffect, useRef } from 'react'
 import useMeasure, { type RectReadOnly } from 'react-use-measure'
 import { Container } from './container'
-import { Link } from './link'
 import { Heading, Subheading } from './text'
 
 const testimonials = [
@@ -152,26 +149,6 @@ function TestimonialCard({
         </figcaption>
       </figure>
     </motion.div>
-  )
-}
-
-function CallToAction() {
-  return (
-    <div>
-      <p className="max-w-sm text-sm/6 text-gray-600">
-        Join the best sellers in the business and start using Yurasis to hit
-        your targets today.
-      </p>
-      <div className="mt-2">
-        <Link
-          href="#"
-          className="inline-flex items-center gap-2 text-sm/6 font-medium text-pink-600"
-        >
-          Get started
-          <ArrowLongRightIcon className="size-5" />
-        </Link>
-      </div>
-    </div>
   )
 }
 

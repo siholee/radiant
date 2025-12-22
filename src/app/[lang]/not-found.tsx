@@ -4,7 +4,6 @@ import { Button } from '@/components/button'
 import { Container } from '@/components/container'
 import { GradientBackground } from '@/components/gradient'
 import { Navbar } from '@/components/navbar'
-import { useTranslation } from '@/hooks/useTranslation'
 import { useLocale } from '@/contexts/LocaleContext'
 
 export default function NotFound() {

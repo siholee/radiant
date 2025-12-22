@@ -1,5 +1,6 @@
 import { prisma } from '@/lib/prisma'
 import type { GraphQLContext } from '../context'
+import { UserRole } from '@prisma/client'
 
 export const userResolvers = {
   Query: {
@@ -33,7 +34,7 @@ export const userResolvers = {
       }
 
       return await prisma.user.findMany({
-        where: role ? { role } : undefined,
+        where: role ? { role: role as UserRole } : undefined,
         orderBy: { createdAt: 'desc' },
       })
     },

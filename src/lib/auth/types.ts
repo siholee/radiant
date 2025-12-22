@@ -1,5 +1,3 @@
-import type { User as PrismaUser } from '@prisma/client'
-
 export type UserRole = 'ADMIN' | 'EMPLOYEE' | 'USER'
 
 export interface SessionUser {

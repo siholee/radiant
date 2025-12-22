@@ -66,7 +66,7 @@ export async function POST(request: Request) {
     let result
     try {
       result = JSON.parse(stdout)
-    } catch (error) {
+    } catch {
       console.error('Failed to parse Python output:', stdout)
       return NextResponse.json(
         { error: 'Invalid response from AI generator', details: stdout },
@@ -109,7 +109,8 @@ export async function POST(request: Request) {
       },
       aiOutput: result,
     })
-  } catch (error: any) {
+  } catch (err) {
+    const error = err as Error
     console.error('CrewAI generation error:', error)
     return NextResponse.json(
       {

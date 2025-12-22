@@ -1,4 +1,3 @@
-import { fallbackLocale } from './config'
 import type { Translations } from './loader'
 
 export function getNestedTranslation(

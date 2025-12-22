@@ -125,7 +125,7 @@ export const taskResolvers = {
       }
 
       // Auto-set completedAt when status changes to DONE
-      const updateData: any = { ...input }
+      const updateData: Record<string, unknown> = { ...input }
       if (input.status === 'DONE' && !input.completedAt) {
         updateData.completedAt = new Date()
       }

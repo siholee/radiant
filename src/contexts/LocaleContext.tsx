@@ -2,7 +2,7 @@
 
 import { createContext, useContext, useEffect, useState, type ReactNode } from 'react'
 import { usePathname, useRouter } from 'next/navigation'
-import { defaultLocale, isValidLocale, type Locale } from '@/lib/i18n'
+import { isValidLocale, type Locale } from '@/lib/i18n'
 
 interface LocaleContextType {
   locale: Locale
@@ -32,7 +32,7 @@ export function LocaleProvider({
       const newPath = pathname.replace(`/${initialLocale}`, `/${stored}`)
       router.replace(newPath)
     }
-  }, [])
+  }, [initialLocale, pathname, router])
 
   const setLocale = (newLocale: Locale) => {
     if (newLocale === locale) return
