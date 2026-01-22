@@ -39,11 +39,57 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
+  // Email verification
+  emailVerified     Boolean   @default(false)
+  emailVerifyToken  String?
+  emailVerifyExpiry DateTime?
+
+  // Password reset
+  resetToken        String?
+  resetTokenExpiry  DateTime?
+
+  // Login security
+  failedLoginAttempts Int       @default(0)
+  lockedUntil         DateTime?
+  lastLoginAt         DateTime?
+  lastLoginIp         String?
+
   // Relations
   blogPosts     BlogPost[]
   employeeTasks EmployeeTask[]
+  sessions      Session[]
 
   @@map("users")
+}
+
+model Session {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  token     String   @unique
+  userAgent String?
+  ipAddress String?
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+  @@index([token])
+  @@map("sessions")
+}
+
+model AuditLog {
+  id        String   @id @default(cuid())
+  userId    String?
+  action    String   // LOGIN, LOGOUT, FAILED_LOGIN, PASSWORD_RESET, REGISTER, etc.
+  ipAddress String?
+  userAgent String?
+  metadata  Json?
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+  @@index([action])
+  @@index([createdAt])
+  @@map("audit_logs")
 }
 
 model BlogPost {
