@@ -1,6 +1,17 @@
 import { Resend } from 'resend'
 
-const resend = new Resend(process.env.RESEND_API_KEY)
+// Lazy initialization to prevent build-time errors
+let resend: Resend | null = null
+
+function getResend(): Resend | null {
+  if (!process.env.RESEND_API_KEY) {
+    return null
+  }
+  if (!resend) {
+    resend = new Resend(process.env.RESEND_API_KEY)
+  }
+  return resend
+}
 
 const FROM_EMAIL = process.env.FROM_EMAIL || 'noreply@yurasis.com'
 const APP_NAME = 'Radiant'
@@ -14,12 +25,13 @@ interface SendEmailOptions {
 
 async function sendEmail(options: SendEmailOptions): Promise<{ success: boolean; error?: string }> {
   try {
-    if (!process.env.RESEND_API_KEY) {
+    const resendClient = getResend()
+    if (!resendClient) {
       console.warn('RESEND_API_KEY not set, skipping email')
       return { success: true } // Return success in development
     }
     
-    await resend.emails.send({
+    await resendClient.emails.send({
       from: FROM_EMAIL,
       to: options.to,
       subject: options.subject,
