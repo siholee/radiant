@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, Suspense } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { Button } from '@/components/button'
 import { GradientBackground } from '@/components/gradient'
@@ -14,7 +14,7 @@ interface PasswordStrength {
   feedback: string[]
 }
 
-export default function ResetPassword({ params }: { params: Promise<{ lang: string }> }) {
+function ResetPasswordContent({ params }: { params: Promise<{ lang: string }> }) {
   const router = useRouter()
   const searchParams = useSearchParams()
   const [lang, setLang] = useState('ko')
@@ -316,5 +316,28 @@ export default function ResetPassword({ params }: { params: Promise<{ lang: stri
         </div>
       </div>
     </main>
+  )
+}
+
+function ResetPasswordLoading() {
+  return (
+    <main className="overflow-hidden bg-gray-50">
+      <GradientBackground />
+      <div className="isolate flex min-h-dvh items-center justify-center p-6 lg:p-8">
+        <div className="w-full max-w-md rounded-xl bg-white shadow-md ring-1 ring-black/5 p-11">
+          <div className="flex items-center justify-center">
+            <div className="h-8 w-8 animate-spin rounded-full border-4 border-gray-200 border-t-black" />
+          </div>
+        </div>
+      </div>
+    </main>
+  )
+}
+
+export default function ResetPassword({ params }: { params: Promise<{ lang: string }> }) {
+  return (
+    <Suspense fallback={<ResetPasswordLoading />}>
+      <ResetPasswordContent params={params} />
+    </Suspense>
   )
 }
