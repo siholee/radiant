@@ -1,4 +1,5 @@
 import { prisma } from '@/lib/prisma'
+import { Prisma } from '@prisma/client'
 
 export type AuditAction =
   | 'LOGIN'
@@ -30,7 +31,7 @@ export async function createAuditLog(data: AuditLogData): Promise<void> {
         action: data.action,
         ipAddress: data.ipAddress || null,
         userAgent: data.userAgent || null,
-        metadata: data.metadata || null,
+        metadata: data.metadata ? (data.metadata as Prisma.InputJsonValue) : Prisma.JsonNull,
       },
     })
   } catch (error) {
