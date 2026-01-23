@@ -1,125 +1,192 @@
-# Radiant
+# Radiant 🚀
 
-Yurasis company website built with Next.js, Apollo GraphQL, PostgreSQL, and Docker. Features AI-powered blog generation with CrewAI and employee task management.
+**보안성이 뛰어난 회원가입/로그인 시스템을 갖춘 Next.js 기반 엔터프라이즈 웹 애플리케이션**
 
-## Features
+Yurasis 기업 웹사이트 - Next.js, Apollo GraphQL, PostgreSQL, Docker 기반. CrewAI를 활용한 AI 블로그 생성 및 직원 작업 관리 기능 포함.
 
-- 🌐 **Multi-language Support**: Korean and English i18n
-- 🔐 **Dual Authentication**: Cookie-based sessions + JWT token fallback
-- 📝 **AI Blog Generation**: Integrated with CrewAI Python scripts
-- 📊 **GraphQL API**: Apollo Server with full CRUD operations
-- 👥 **Employee Management**: Task assignment and tracking
-- 🐳 **Docker Deployment**: Production-ready containerized setup
-- 🔒 **Secure Middleware**: Role-based access control (ADMIN, EMPLOYEE, USER)
+## ✨ 주요 기능
 
-## Tech Stack
+### 🔐 **강력한 보안 인증 시스템**
+- ✅ 회원가입 (이메일 인증)
+- ✅ 로그인/로그아웃 (세션 기반)
+- ✅ 비밀번호 찾기/재설정
+- ✅ 프로필 업데이트
+- ✅ 비밀번호 변경
+- ✅ Rate Limiting (DDoS 방어)
+- ✅ 계정 잠금 (브루트포스 방어)
+- ✅ 감사 로그 (보안 이벤트 기록)
+- ✅ 비밀번호 강도 검증
 
-- **Frontend**: Next.js 15, React 19, Tailwind CSS, Framer Motion
-- **Backend**: Apollo Server, GraphQL, Prisma ORM
-- **Database**: PostgreSQL 16
-- **Cache**: Redis 7
-- **Authentication**: iron-session, JWT (jose), bcryptjs
-- **AI**: Python 3.11 + CrewAI
-- **Deployment**: Docker, Nginx, Certbot (SSL)
+### 🌐 **다국어 지원**
+- 한국어/영어 i18n 지원
 
-## Getting Started
+### 📝 **AI 블로그 생성**
+- CrewAI Python 스크립트 통합
 
-### Prerequisites
+### 📊 **GraphQL API**
+- Apollo Server
+- 완전한 CRUD 작업 지원
 
-- Node.js 20+ (for local development)
-- Docker & Docker Compose (for production)
-- PostgreSQL 16 (if running locally without Docker)
+### 👥 **직원 관리**
+- 작업 할당 및 추적
 
-### Local Development
+### 🐳 **프로덕션 배포**
+- Docker 컨테이너화
+- Nginx 리버스 프록시
+- Let's Encrypt SSL
 
-1. **Install dependencies:**
+## 🛠 기술 스택
 
+### Frontend
+- **Next.js 15** (App Router)
+- **React 19**
+- **Tailwind CSS**
+- **Framer Motion**
+- **Headless UI**
+
+### Backend
+- **Apollo Server**
+- **GraphQL**
+- **Prisma ORM**
+
+### Database & Cache
+- **PostgreSQL 16**
+- **Redis 7**
+
+### Authentication & Security
+- **iron-session** (암호화된 세션 쿠키)
+- **bcryptjs** (비밀번호 해싱)
+- **Zod** (입력 검증)
+- **Rate Limiting** (엔드포인트별 제한)
+- **Audit Logging** (보안 이벤트 기록)
+
+### AI & Automation
+- **Python 3.11**
+- **CrewAI**
+
+### Deployment
+- **Docker & Docker Compose**
+- **Nginx**
+- **Certbot (SSL)**
+
+## 🚀 빠른 시작
+
+### 📋 사전 요구사항
+
+- Node.js 20+
+- PostgreSQL 16 (또는 Docker)
+- Redis 7 (또는 Docker)
+
+### 💻 로컬 개발 환경 설정
+
+**상세한 가이드는 [DEVELOPMENT.md](DEVELOPMENT.md) 참조**
+
+1. **저장소 클론**
+```bash
+git clone https://github.com/siholee/radiant.git
+cd radiant
+```
+
+2. **의존성 설치**
 ```bash
 npm install
 ```
 
-2. **Set up environment variables:**
-
+3. **데이터베이스 시작 (Docker 사용)**
 ```bash
-cp .env.example .env
+# 개발용 PostgreSQL + Redis 시작
+npm run docker:dev
+
+# 또는
+docker compose -f docker-compose.dev.yml up -d
 ```
 
-Edit `.env` and configure:
-- `DATABASE_URL`: PostgreSQL connection string
-- `SESSION_SECRET`: 32+ character random string
-- `JWT_SECRET`: 32+ character random string
-
-3. **Initialize database:**
-
+4. **환경변수 설정**
 ```bash
-npx prisma generate
-npx prisma db push
+cp .env.local.example .env.local
+nano .env.local  # 편집
 ```
 
-4. **Run development server:**
+5. **데이터베이스 마이그레이션**
+```bash
+npm run db:generate
+npm run db:migrate
+```
 
+6. **개발 서버 시작**
 ```bash
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) in your browser.
+브라우저에서 http://localhost:3000 접속
 
-Open [http://localhost:3000](http://localhost:3000) in your browser.
-
-### Docker Deployment (Production)
-
-1. **Prepare environment:**
+### 📦 NPM 스크립트
 
 ```bash
-cp .env.example .env
-# Edit .env with production values
+# 개발
+npm run dev              # 개발 서버 시작
+npm run build            # 프로덕션 빌드
+npm start               # 프로덕션 서버 시작
+
+# 데이터베이스
+npm run db:generate      # Prisma Client 생성
+npm run db:migrate       # 마이그레이션 실행
+npm run db:studio        # Prisma Studio (GUI)
+npm run db:reset         # 데이터베이스 초기화 (주의!)
+
+# Docker
+npm run docker:dev       # 개발용 DB 시작
+npm run docker:dev:down  # 개발용 DB 중지
+npm run docker:prod      # 프로덕션 배포
+npm run docker:prod:down # 프로덕션 중지
 ```
 
-Generate secure secrets:
+## 🔐 인증 API 엔드포인트
+
+| 엔드포인트 | 메서드 | 설명 | 인증 필요 |
+|-----------|--------|------|----------|
+| `/api/auth/register` | POST | 회원가입 | ❌ |
+| `/api/auth/login` | POST | 로그인 | ❌ |
+| `/api/auth/logout` | POST | 로그아웃 | ✅ |
+| `/api/auth/me` | GET | 현재 사용자 정보 | ✅ |
+| `/api/auth/profile` | PUT | 프로필 업데이트 | ✅ |
+| `/api/auth/change-password` | POST | 비밀번호 변경 | ✅ |
+| `/api/auth/forgot-password` | POST | 비밀번호 찾기 | ❌ |
+| `/api/auth/reset-password` | POST | 비밀번호 재설정 | ❌ |
+| `/api/auth/verify-email` | GET | 이메일 인증 | ❌ |
+
+**API 사용 예시는 [DEVELOPMENT.md](DEVELOPMENT.md#-api-테스트) 참조**
+
+## 🐳 프로덕션 배포
+
+### Vultr 서버 초기 설정
+
+**상세한 보안 가이드는 [SECURITY.md](SECURITY.md) 참조**
+
+1. **서버 접속**
 ```bash
-openssl rand -base64 32  # For SESSION_SECRET
-openssl rand -base64 32  # For JWT_SECRET
+ssh root@YOUR_SERVER_IP
 ```
 
-2. **Build and run with Docker Compose:**
-
-```bash
-docker-compose up -d --build
-```
-
-3. **Initialize database:**
-
-```bash
-docker-compose exec app npx prisma db push
-```
-
-4. **Create admin user:**
-
-```bash
-curl -X POST http://localhost:3000/api/auth/register \
-  -H "Content-Type: application/json" \
-  -d '{"email":"admin@yurasis.com","password":"your-password","name":"Admin","role":"ADMIN"}'
-```
-
-## Vultr Deployment
-
-### Initial Server Setup
-
-1. **Connect to Vultr server:**
-
-```bash
-ssh root@your-vultr-ip
-```
-
-2. **Install dependencies:**
-
+2. **필수 패키지 설치**
 ```bash
 apt update && apt upgrade -y
-apt install -y docker.io docker-compose nginx certbot python3-certbot-nginx git
+apt install -y docker.io docker-compose git ufw fail2ban nginx certbot python3-certbot-nginx
+systemctl enable docker
+systemctl start docker
 ```
 
-3. **Clone repository:**
+3. **방화벽 설정 (중요!)**
+```bash
+ufw default deny incoming
+ufw default allow outgoing
+ufw allow 22/tcp    # SSH
+ufw allow 80/tcp    # HTTP
+ufw allow 443/tcp   # HTTPS
+ufw enable
+```
 
+4. **프로젝트 클론**
 ```bash
 mkdir -p /var/www
 cd /var/www
@@ -127,31 +194,58 @@ git clone https://github.com/siholee/radiant.git
 cd radiant
 ```
 
-4. **Configure environment:**
-
+5. **환경변수 설정**
 ```bash
 cp .env.example .env
-nano .env  # Edit with production values
+nano .env  # 프로덕션 값으로 편집
+
+# 강력한 비밀번호 생성
+openssl rand -base64 24  # PostgreSQL
+openssl rand -base64 24  # Redis  
+openssl rand -hex 32     # Session Secret
+openssl rand -hex 32     # JWT Secret
 ```
 
-5. **Set up Nginx:**
-
+6. **Nginx 설정**
 ```bash
 cp nginx.conf /etc/nginx/sites-available/yurasis.com
 ln -s /etc/nginx/sites-available/yurasis.com /etc/nginx/sites-enabled/
+rm /etc/nginx/sites-enabled/default  # 기본 사이트 제거
 nginx -t && systemctl restart nginx
 ```
 
-6. **Get SSL certificate:**
-
+7. **SSL 인증서 발급**
 ```bash
 certbot --nginx -d yurasis.com -d www.yurasis.com
 ```
 
-7. **Start application:**
-
+8. **애플리케이션 시작**
 ```bash
-./deploy.sh
+docker compose up -d --build
+```
+
+9. **데이터베이스 마이그레이션**
+```bash
+docker exec -it radiant-app sh
+npx prisma migrate deploy
+npx prisma generate
+exit
+
+docker compose restart app
+```
+
+10. **배포 확인**
+```bash
+# 컨테이너 상태 확인
+docker ps
+
+# 로그 확인
+docker logs radiant-app
+docker logs radiant-postgres
+
+# 외부 포트 스캔 (로컬에서 실행)
+nmap -sV YOUR_SERVER_IP
+# 22, 80, 443만 보여야 함 (3000, 5432, 6379 보이면 안됨!)
 ```
 
 ### Continuous Deployment

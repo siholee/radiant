@@ -89,6 +89,14 @@ export const rateLimitConfigs = {
     windowMs: 15 * 60 * 1000, // 15 minutes
     maxAttempts: 5, // 5 verification attempts
   },
+  'profile-update': {
+    windowMs: 15 * 60 * 1000, // 15 minutes
+    maxAttempts: 10, // 10 updates per 15 minutes
+  },
+  'password-change': {
+    windowMs: 60 * 60 * 1000, // 1 hour
+    maxAttempts: 3, // 3 password changes per hour
+  },
 }
 
 /**

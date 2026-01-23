@@ -8,9 +8,12 @@ export type AuditAction =
   | 'REGISTER'
   | 'PASSWORD_RESET_REQUEST'
   | 'PASSWORD_RESET'
+  | 'PASSWORD_CHANGED'
+  | 'PASSWORD_CHANGE_FAILED'
   | 'EMAIL_VERIFICATION'
   | 'ACCOUNT_LOCKED'
   | 'ACCOUNT_UNLOCKED'
+  | 'PROFILE_UPDATE'
 
 interface AuditLogData {
   userId?: string
