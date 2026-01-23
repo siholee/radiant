@@ -27,6 +27,7 @@ const handler = startServerAndCreateNextHandler<NextRequest, GraphQLContext>(
               email: userEmail,
               name: userEmail.split('@')[0],
               role: userRole as 'ADMIN' | 'EMPLOYEE' | 'USER',
+              emailVerified: true, // GraphQL requests come through authenticated middleware
             }
           : null
 

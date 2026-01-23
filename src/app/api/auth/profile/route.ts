@@ -62,7 +62,7 @@ export async function PUT(request: NextRequest) {
       }
 
       // If email changed, require re-verification
-      const updateData: any = { email, emailVerified: false }
+      const updateData: { email?: string; name?: string; emailVerified: boolean } = { email, emailVerified: false }
       if (name) updateData.name = name
 
       const updatedUser = await prisma.user.update({
@@ -109,7 +109,7 @@ export async function PUT(request: NextRequest) {
     }
 
     // Update only name
-    const updateData: any = {}
+    const updateData: { name?: string } = {}
     if (name) updateData.name = name
 
     if (Object.keys(updateData).length === 0) {

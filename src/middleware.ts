@@ -74,6 +74,7 @@ export async function middleware(request: NextRequest) {
           email: payload.email,
           name: payload.email.split('@')[0], // Fallback name
           role: payload.role,
+          emailVerified: true, // JWT tokens are issued after login, assume verified
         }
       }
     }

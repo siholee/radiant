@@ -159,6 +159,7 @@ export async function POST(request: Request) {
       email: user.email,
       name: user.name,
       role: user.role,
+      emailVerified: user.emailVerified,
     }
 
     // If client requests token (for API usage), return JWT
