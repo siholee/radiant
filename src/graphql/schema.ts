@@ -19,6 +19,28 @@ export const typeDefs = `#graphql
     ARCHIVED
   }
 
+  # Blog Creator Enums
+  enum ApiKeyProvider {
+    OPENAI
+    ANTHROPIC
+    GOOGLE
+    AZURE_OPENAI
+  }
+
+  enum ApiKeyStatus {
+    ACTIVE
+    DEPRECATED
+    REVOKED
+  }
+
+  enum JobStatus {
+    PENDING
+    PROCESSING
+    COMPLETED
+    FAILED
+    CANCELLED
+  }
+
   # Types
   type User {
     id: ID!
@@ -62,6 +84,67 @@ export const typeDefs = `#graphql
     updatedAt: String!
     assignee: User!
     assigneeId: String!
+  }
+
+  # Blog Creator Types
+  type UserApiKey {
+    id: ID!
+    provider: ApiKeyProvider!
+    label: String
+    status: ApiKeyStatus!
+    lastUsedAt: String
+    createdAt: String!
+    updatedAt: String!
+    usage: ApiKeyUsageStats
+  }
+
+  type ApiKeyUsageStats {
+    requestCount: Int!
+    totalCost: Float!
+    totalInputTokens: Int!
+    totalOutputTokens: Int!
+  }
+
+  type WritingStyleProfile {
+    id: ID!
+    name: String!
+    description: String
+    styleMetadata: String # JSON string
+    isActive: Boolean!
+    sampleCount: Int!
+    createdAt: String!
+    updatedAt: String!
+    createdBy: User
+  }
+
+  type WritingSample {
+    id: ID!
+    title: String
+    contentPreview: String!
+    sourceUrl: String
+    wordCount: Int!
+    language: String!
+    platform: String
+    isApproved: Boolean!
+    createdAt: String!
+  }
+
+  type BlogGenerationJob {
+    id: ID!
+    status: JobStatus!
+    progress: Int!
+    prompt: String!
+    title: String
+    locale: String!
+    tags: [String!]!
+    styleProfileId: String
+    aiProvider: ApiKeyProvider
+    aiModel: String
+    errorMessage: String
+    processingTime: Int
+    createdAt: String!
+    completedAt: String
+    blogPost: BlogPost
   }
 
   # Inputs
@@ -108,6 +191,36 @@ export const typeDefs = `#graphql
     completedAt: String
   }
 
+  # Blog Creator Inputs
+  input CreateApiKeyInput {
+    provider: ApiKeyProvider!
+    apiKey: String!
+    label: String
+  }
+
+  input CreateWritingProfileInput {
+    name: String!
+    description: String
+    styleMetadata: String
+  }
+
+  input UpdateWritingProfileInput {
+    name: String
+    description: String
+    isActive: Boolean
+    styleMetadata: String
+  }
+
+  input StartBlogGenerationInput {
+    prompt: String!
+    title: String
+    locale: String
+    tags: [String!]
+    styleProfileId: String
+    aiProvider: ApiKeyProvider
+    aiModel: String
+  }
+
   # Queries
   type Query {
     # User queries
@@ -133,6 +246,14 @@ export const typeDefs = `#graphql
       limit: Int
       offset: Int
     ): [EmployeeTask!]!
+
+    # Blog Creator Queries
+    myApiKeys: [UserApiKey!]!
+    writingProfiles(activeOnly: Boolean): [WritingStyleProfile!]!
+    writingProfile(id: ID!): WritingStyleProfile
+    writingSamples(profileId: ID!): [WritingSample!]!
+    blogGenerationJob(id: ID!): BlogGenerationJob
+    myBlogJobs(status: JobStatus, limit: Int, offset: Int): [BlogGenerationJob!]!
   }
 
   # Mutations
@@ -147,5 +268,16 @@ export const typeDefs = `#graphql
     createEmployeeTask(input: CreateEmployeeTaskInput!): EmployeeTask!
     updateEmployeeTask(id: ID!, input: UpdateEmployeeTaskInput!): EmployeeTask!
     deleteEmployeeTask(id: ID!): Boolean!
+
+    # Blog Creator Mutations
+    createApiKey(input: CreateApiKeyInput!): UserApiKey!
+    deleteApiKey(id: ID!): Boolean!
+    
+    createWritingProfile(input: CreateWritingProfileInput!): WritingStyleProfile!
+    updateWritingProfile(id: ID!, input: UpdateWritingProfileInput!): WritingStyleProfile!
+    deleteWritingProfile(id: ID!): Boolean!
+    
+    startBlogGeneration(input: StartBlogGenerationInput!): BlogGenerationJob!
+    cancelBlogGeneration(id: ID!): Boolean!
   }
 `

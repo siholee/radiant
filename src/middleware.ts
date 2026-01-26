@@ -8,11 +8,20 @@ import type { SessionData, SessionUser } from './lib/auth/types'
 const protectedRoutes = [
   '/api/graphql', // GraphQL endpoint
   '/[lang]/dashboard', // Employee dashboard (any language)
+  '/api/api-keys', // API key management
+  '/api/blog-generator', // Blog generation
+  '/api/writing-style', // Writing style management
 ]
 
 // Admin-only routes
 const adminRoutes = [
-  '/api/crewai/generate', // CrewAI blog generation
+  '/api/crewai/generate', // CrewAI blog generation (legacy)
+]
+
+// Routes that require ADMIN or EMPLOYEE role
+const privilegedRoutes = [
+  '/api/writing-style/profiles', // Writing style profile management (ADMIN + EMPLOYEE)
+  '/api/writing-style/samples', // Writing sample management (ADMIN + EMPLOYEE)
 ]
 
 const sessionOptions = {
@@ -42,8 +51,9 @@ export async function middleware(request: NextRequest) {
   })
 
   const isAdmin = adminRoutes.some(route => pathname.startsWith(route))
+  const isPrivileged = privilegedRoutes.some(route => pathname.startsWith(route))
 
-  if (!isProtected && !isAdmin) {
+  if (!isProtected && !isAdmin && !isPrivileged) {
     return NextResponse.next()
   }
 
@@ -100,6 +110,18 @@ export async function middleware(request: NextRequest) {
     if (pathname.startsWith('/api/')) {
       return NextResponse.json(
         { error: 'Forbidden', message: 'Admin access required' },
+        { status: 403 }
+      )
+    } else {
+      return NextResponse.redirect(new URL('/ko/403', request.url))
+    }
+  }
+
+  // Check privileged access (ADMIN or EMPLOYEE)
+  if (isPrivileged && user.role !== 'ADMIN' && user.role !== 'EMPLOYEE') {
+    if (pathname.startsWith('/api/')) {
+      return NextResponse.json(
+        { error: 'Forbidden', message: 'Insufficient permissions' },
         { status: 403 }
       )
     } else {

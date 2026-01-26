@@ -14,6 +14,9 @@ export type AuditAction =
   | 'ACCOUNT_LOCKED'
   | 'ACCOUNT_UNLOCKED'
   | 'PROFILE_UPDATE'
+  | 'API_KEY_CREATED'
+  | 'API_KEY_REVOKED'
+  | 'BLOG_GENERATION_STARTED'
 
 interface AuditLogData {
   userId?: string

@@ -2,7 +2,8 @@
   "nav": {
     "company": "웹 빌더",
     "pricing": "마케팅",
-    "login": "로그인"
+    "login": "로그인",
+    "logout": "로그아웃"
   },
   "footer": {
     "cta": {

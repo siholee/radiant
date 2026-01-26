@@ -2,7 +2,8 @@
   "nav": {
     "company": "Web Builder",
     "pricing": "Marketing",
-    "login": "Login"
+    "login": "Login",
+    "logout": "Logout"
   },
   "footer": {
     "cta": {

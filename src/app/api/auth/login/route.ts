@@ -140,6 +140,25 @@ export async function POST(request: Request) {
       )
     }
 
+    // Check if email is verified (only in production)
+    if (process.env.NODE_ENV === 'production' && !user.emailVerified) {
+      await createAuditLog({
+        userId: user.id,
+        action: 'FAILED_LOGIN',
+        ipAddress,
+        userAgent,
+        metadata: { reason: 'email_not_verified' },
+      })
+
+      return NextResponse.json(
+        { 
+          error: '이메일 인증이 필요합니다. 이메일을 확인해주세요.',
+          code: 'EMAIL_NOT_VERIFIED'
+        },
+        { status: 403 }
+      )
+    }
+
     // Reset failed login attempts on successful login
     await resetFailedLoginAttempts(user.id)
 

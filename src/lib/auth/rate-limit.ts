@@ -73,6 +73,7 @@ export async function rateLimit(
  * Rate limit configurations for different endpoints
  */
 export const rateLimitConfigs = {
+  // Auth related
   login: {
     windowMs: 15 * 60 * 1000, // 15 minutes
     maxAttempts: 5, // 5 attempts per window
@@ -97,6 +98,60 @@ export const rateLimitConfigs = {
     windowMs: 60 * 60 * 1000, // 1 hour
     maxAttempts: 3, // 3 password changes per hour
   },
+  
+  // Blog Creator related
+  'blog-generation': {
+    windowMs: 60 * 60 * 1000, // 1 hour
+    maxAttempts: 10, // 10 generation requests per hour
+  },
+  'api-key-create': {
+    windowMs: 24 * 60 * 60 * 1000, // 24 hours
+    maxAttempts: 5, // 5 API key creations per day
+  },
+  'api-key-rotate': {
+    windowMs: 60 * 60 * 1000, // 1 hour
+    maxAttempts: 10, // 10 rotations per hour
+  },
+  'web-scraping': {
+    windowMs: 60 * 1000, // 1 minute
+    maxAttempts: 30, // 30 scraping requests per minute
+  },
+  'writing-sample': {
+    windowMs: 60 * 60 * 1000, // 1 hour
+    maxAttempts: 20, // 20 sample additions per hour
+  },
+  'writing-profile': {
+    windowMs: 60 * 60 * 1000, // 1 hour
+    maxAttempts: 10, // 10 profile operations per hour
+  },
+  'embedding-generation': {
+    windowMs: 60 * 1000, // 1 minute
+    maxAttempts: 20, // 20 embedding calls per minute
+  },
+} as const
+
+export type RateLimitKey = keyof typeof rateLimitConfigs
+
+/**
+ * Apply rate limit using predefined config key
+ */
+export async function applyRateLimit(
+  key: RateLimitKey,
+  identifier: string
+): Promise<RateLimitResult> {
+  const config = rateLimitConfigs[key]
+  return rateLimit(`${key}:${identifier}`, config)
+}
+
+/**
+ * Get rate limit headers for response
+ */
+export function getRateLimitHeaders(result: RateLimitResult): Record<string, string> {
+  return {
+    'X-RateLimit-Remaining': result.remaining.toString(),
+    'X-RateLimit-Reset': Math.ceil(result.reset.getTime() / 1000).toString(),
+    ...(result.success ? {} : { 'Retry-After': Math.ceil((result.reset.getTime() - Date.now()) / 1000).toString() }),
+  }
 }
 
 /**

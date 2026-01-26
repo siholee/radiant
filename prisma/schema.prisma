@@ -2,13 +2,15 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-  provider      = "prisma-client-js"
-  binaryTargets = ["native", "linux-musl-openssl-3.0.x"]
+  provider        = "prisma-client-js"
+  binaryTargets   = ["native", "linux-musl-openssl-3.0.x"]
+  previewFeatures = ["postgresqlExtensions"]
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider   = "postgresql"
+  url        = env("DATABASE_URL")
+  extensions = [vector]
 }
 
 enum UserRole {
@@ -28,6 +30,31 @@ enum BlogStatus {
   DRAFT
   PUBLISHED
   ARCHIVED
+}
+
+// ==========================================
+// Blog Creator Feature - New Enums
+// ==========================================
+
+enum ApiKeyProvider {
+  OPENAI
+  ANTHROPIC
+  GOOGLE
+  AZURE_OPENAI
+}
+
+enum ApiKeyStatus {
+  ACTIVE
+  DEPRECATED
+  REVOKED
+}
+
+enum JobStatus {
+  PENDING
+  PROCESSING
+  COMPLETED
+  FAILED
+  CANCELLED
 }
 
 model User {
@@ -58,6 +85,11 @@ model User {
   blogPosts     BlogPost[]
   employeeTasks EmployeeTask[]
   sessions      Session[]
+  
+  // Blog Creator Relations
+  apiKeys              UserApiKey[]
+  writingStyleProfiles WritingStyleProfile[]
+  blogGenerationJobs   BlogGenerationJob[]
 
   @@map("users")
 }
@@ -115,6 +147,9 @@ model BlogPost {
   // Relations
   authorId    String
   author      User        @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  
+  // Blog Generation Job reference
+  generationJob BlogGenerationJob?
 
   @@index([status, publishedAt])
   @@index([locale, status])
@@ -140,4 +175,174 @@ model EmployeeTask {
   @@index([status, assigneeId])
   @@index([dueDate])
   @@map("employee_tasks")
+}
+
+// ==========================================
+// Blog Creator Feature - New Models
+// ==========================================
+
+model UserApiKey {
+  id           String         @id @default(cuid())
+  userId       String
+  user         User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  provider     ApiKeyProvider
+  encryptedKey String         @db.Text // AES-256-GCM encrypted
+  keyVersion   Int            @default(1) // Encryption key version
+  label        String?        // User-friendly name
+  
+  status       ApiKeyStatus   @default(ACTIVE)
+  deprecatedAt DateTime?
+  revokedAt    DateTime?
+  
+  lastUsedAt   DateTime?
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+  
+  // Relations
+  usageLogs    ApiKeyUsage[]
+  
+  @@unique([userId, provider]) // One key per provider per user
+  @@index([userId, status])
+  @@map("user_api_keys")
+}
+
+model ApiKeyUsage {
+  id            String      @id @default(cuid())
+  keyId         String
+  key           UserApiKey  @relation(fields: [keyId], references: [id], onDelete: Cascade)
+  
+  // Token usage
+  inputTokens   Int         @default(0)
+  outputTokens  Int         @default(0)
+  totalTokens   Int         @default(0)
+  
+  // Cost tracking
+  estimatedCost Float       @default(0) // in USD
+  
+  // Performance metrics
+  responseTime  Int?        // milliseconds
+  success       Boolean     @default(true)
+  errorMessage  String?
+  
+  // Request context
+  model         String?     // e.g., "gpt-4o", "claude-3-5-sonnet"
+  purpose       String?     // e.g., "blog_generation", "embedding"
+  
+  timestamp     DateTime    @default(now())
+  
+  @@index([keyId, timestamp])
+  @@index([timestamp])
+  @@map("api_key_usage")
+}
+
+model WritingStyleProfile {
+  id          String   @id @default(cuid())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  name        String
+  description String?
+  
+  // Style characteristics (extracted from samples)
+  styleMetadata Json?   // { tone, vocabulary, structure, etc. }
+  
+  // Aggregate embedding for quick matching
+  embedding   Unsupported("vector(1536)")?
+  
+  isActive    Boolean  @default(true)
+  sampleCount Int      @default(0)
+  
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  // Relations
+  samples     WritingSample[]
+  
+  @@index([userId, isActive])
+  @@map("writing_style_profiles")
+}
+
+model WritingSample {
+  id          String              @id @default(cuid())
+  profileId   String
+  profile     WritingStyleProfile @relation(fields: [profileId], references: [id], onDelete: Cascade)
+  
+  // Original content
+  title       String?
+  content     String              @db.Text
+  sourceUrl   String?             // Original blog post URL
+  
+  // Metadata
+  wordCount   Int
+  language    String              @default("ko")
+  platform    String?             // "naver", "wordpress", "medium", etc.
+  
+  // Vector embedding for RAG
+  embedding   Unsupported("vector(1536)")?
+  
+  // Quality/relevance
+  isApproved  Boolean             @default(true)
+  
+  createdAt   DateTime            @default(now())
+  
+  @@index([profileId, isApproved])
+  @@map("writing_samples")
+}
+
+model BlogGenerationJob {
+  id            String      @id @default(cuid())
+  userId        String
+  user          User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  // Input
+  prompt        String      @db.Text
+  title         String?
+  locale        String      @default("ko")
+  tags          String[]
+  
+  // Style profile reference
+  styleProfileId String?
+  
+  // Processing
+  status        JobStatus   @default(PENDING)
+  progress      Int         @default(0) // 0-100
+  currentStep   String?     // Current processing step description
+  steps         Json?       // Array of completed steps with timestamps
+  
+  // Output
+  blogPostId    String?     @unique
+  blogPost      BlogPost?   @relation(fields: [blogPostId], references: [id])
+  
+  // Metadata
+  errorMessage  String?     @db.Text
+  processingTime Int?       // seconds
+  
+  // AI model used
+  aiModel       String?     // e.g., "gpt-4o", "claude-3-5-sonnet"
+  aiProvider    ApiKeyProvider?
+  
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+  completedAt   DateTime?
+  
+  @@index([userId, status])
+  @@index([status, createdAt])
+  @@map("blog_generation_jobs")
+}
+
+// User's saved blog links (for reference, not training)
+model UserBlogLink {
+  id          String   @id @default(cuid())
+  userId      String
+  
+  title       String
+  url         String
+  platform    String   // "naver", "wordpress", "tistory", etc.
+  publishedAt DateTime?
+  
+  createdAt   DateTime @default(now())
+  
+  @@index([userId, platform])
+  @@map("user_blog_links")
 }

@@ -3,6 +3,24 @@ crewai>=0.1.0
 langchain>=0.1.0
 openai>=1.0.0
 
+# LangGraph workflow
+langgraph>=0.0.20
+langchain-openai>=0.0.5
+langchain-anthropic>=0.1.0
+langchain-community>=0.0.20
+
+# Vector Store / RAG
+langchain-postgres>=0.0.1
+pgvector>=0.2.0
+psycopg2-binary>=2.9.9
+
+# Web scraping (fallback)
+httpx>=0.26.0
+beautifulsoup4>=4.12.0
+
+# Environment
+python-dotenv>=1.0.0
+
 # Optional: Add other dependencies your CrewAI script needs
 # requests
 # beautifulsoup4
