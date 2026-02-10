@@ -1,19 +1,17 @@
-# CrewAI with pinned compatible versions
+# CrewAI with compatible versions
+# Let dependencies auto-resolve to avoid conflicts
 crewai==1.9.3
 langchain==0.3.27
-langchain-core==0.3.83
-langchain-text-splitters==0.3.11
 openai==1.83.0
 
 # Google Gemini
 google-generativeai==0.8.3
 
-# LangGraph workflow - compatible versions
+# LangGraph workflow - use compatible versions
 langgraph==1.0.1
-langgraph-checkpoint==2.1.2
 langchain-openai==0.3.0
 langchain-anthropic==0.3.22
-langchain-community==0.3.8
+langchain-community==0.3.27
 
 # Vector Store / RAG
 langchain-postgres==0.0.1
