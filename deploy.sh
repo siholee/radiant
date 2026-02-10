@@ -55,6 +55,32 @@ if [ ! -f .env ]; then
     exit 1
 fi
 
+# Security checks
+log_info "Running security checks..."
+
+# Check for weak passwords
+if grep -q "changeme\|password123\|admin123" .env; then
+    log_error "Weak password detected in .env file. Please use strong passwords!"
+    exit 1
+fi
+
+# Check if required environment variables are set
+required_vars=("POSTGRES_PASSWORD" "REDIS_PASSWORD" "SESSION_SECRET" "JWT_SECRET" "ENCRYPTION_KEY_V1")
+for var in "${required_vars[@]}"; do
+    if ! grep -q "^${var}=" .env || grep -q "^${var}=change_me" .env; then
+        log_error "Required variable $var is not set or uses default value"
+        exit 1
+    fi
+done
+
+# Check firewall status
+if ! sudo ufw status | grep -q "Status: active"; then
+    log_warn "⚠️  UFW firewall is not active. Consider enabling it for better security."
+    log_warn "Run: sudo ufw enable"
+fi
+
+log_info "✅ Security checks passed"
+
 # Stop running containers
 log_info "Stopping running containers..."
 docker-compose -f "$DOCKER_COMPOSE_FILE" down || true
