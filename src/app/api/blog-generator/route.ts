@@ -20,6 +20,13 @@ const createJobSchema = z.object({
   styleProfileId: z.string().optional(),
   aiProvider: z.enum(['OPENAI', 'ANTHROPIC', 'GOOGLE', 'AZURE_OPENAI']).default('OPENAI'),
   aiModel: z.string().optional(),
+  aiAgents: z.object({
+    opener: z.string().default('openai'),
+    researcher: z.string().default('perplexity'),
+    writer: z.string().default('gemini'),
+    editor: z.string().default('openai'),
+  }).optional(),
+  layoutId: z.string().optional(),
 })
 
 /**
@@ -101,7 +108,7 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    const { prompt, title, locale, tags, styleProfileId, aiProvider, aiModel } = parsed.data
+    const { prompt, title, locale, tags, styleProfileId, aiProvider, aiModel, aiAgents, layoutId } = parsed.data
 
     // Verify user has an API key for the selected provider
     const apiKey = await prisma.userApiKey.findFirst({
@@ -139,6 +146,41 @@ export async function POST(request: NextRequest) {
       }
     }
 
+    // Validate layout template if provided
+    let layoutData: { id: string; name: string; instruction: string } | null = null
+    if (layoutId) {
+      const layout = await prisma.blogLayoutTemplate.findFirst({
+        where: {
+          id: layoutId,
+          isActive: true,
+          OR: [
+            { userId },
+            { isSystem: true },
+            { isPublic: true },
+          ],
+        },
+      })
+
+      if (!layout) {
+        return NextResponse.json(
+          { error: 'Layout template not found or inactive' },
+          { status: 400 },
+        )
+      }
+
+      layoutData = {
+        id: layout.id,
+        name: layout.name,
+        instruction: layout.promptInstruction,
+      }
+
+      // Increment usage count
+      await prisma.blogLayoutTemplate.update({
+        where: { id: layoutId },
+        data: { usageCount: { increment: 1 } },
+      })
+    }
+
     // Create the job record
     const job = await prisma.blogGenerationJob.create({
       data: {
@@ -151,7 +193,15 @@ export async function POST(request: NextRequest) {
         status: 'PENDING',
         progress: 0,
         currentStep: '대기 중...',
-        steps: [],
+        steps: {
+          aiAgents: aiAgents || {
+            opener: 'openai',
+            researcher: 'perplexity',
+            writer: 'gemini',
+            editor: 'openai',
+          },
+          ...(layoutData && { layout: layoutData }),
+        },
         aiProvider,
         aiModel: aiModel || 'gpt-4o-mini',
       },

@@ -6,6 +6,7 @@
  */
 
 import { fetchWithJinaReader, type JinaReaderResult } from './jina-reader'
+import { cleanBlogContent, extractMainContent } from './text-cleaner'
 
 export interface NaverBlogScrapResult {
   success: boolean
@@ -122,12 +123,20 @@ async function scrapeWithPuppeteer(url: string): Promise<NaverBlogScrapResult> {
         throw new Error('Could not extract content from Naver blog')
       }
 
-      const wordCount = content.split(/\s+/).filter((w: string) => w.length > 0).length
+      // Clean and extract main content
+      let cleanedContent = cleanBlogContent(content, 'naver')
+      cleanedContent = extractMainContent(cleanedContent)
+
+      if (!cleanedContent || cleanedContent.length < 100) {
+        throw new Error('Insufficient content after cleaning')
+      }
+
+      const wordCount = cleanedContent.split(/\s+/).filter((w: string) => w.length > 0).length
 
       return {
         success: true,
         title: title || undefined,
-        content,
+        content: cleanedContent,
         wordCount,
         url,
         platform: 'naver',
@@ -183,6 +192,24 @@ export async function scrapeNaverBlog(url: string): Promise<NaverBlogScrapResult
 
   // Fallback to Jina Reader
   const jinaResult: JinaReaderResult = await fetchWithJinaReader({ url })
+
+  if (jinaResult.success && jinaResult.content) {
+    // Clean Jina Reader content as well
+    let cleanedContent = cleanBlogContent(jinaResult.content, 'naver')
+    cleanedContent = extractMainContent(cleanedContent)
+
+    const wordCount = cleanedContent.split(/\s+/).filter(w => w.length > 0).length
+
+    return {
+      success: true,
+      title: jinaResult.title,
+      content: cleanedContent,
+      wordCount,
+      url: jinaResult.url,
+      platform: 'naver',
+      method: 'jina',
+    }
+  }
 
   return {
     success: jinaResult.success,

@@ -3,7 +3,20 @@
     "company": "Web Builder",
     "pricing": "Marketing",
     "login": "Login",
-    "logout": "Logout"
+    "logout": "Logout",
+    "mypage": "My Page"
+  },
+  "mypage": {
+    "title": "My Page",
+    "dashboard": "Home",
+    "settings": "Settings",
+    "apiKeys": "API Keys",
+    "blogCreator": "Blog Creator",
+    "layoutTemplates": "Layout Templates",
+    "writingModels": "Model Management",
+    "modelManagement": "Model Management",
+    "welcome": "Welcome",
+    "comingSoon": "Coming Soon"
   },
   "footer": {
     "cta": {

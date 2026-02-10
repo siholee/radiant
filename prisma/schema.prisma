@@ -15,6 +15,8 @@ datasource db {
 
 enum UserRole {
   ADMIN
+  PARTNER
+  LIGHT
   EMPLOYEE
   USER
 }
@@ -57,6 +59,19 @@ enum JobStatus {
   CANCELLED
 }
 
+enum SampleStatus {
+  PENDING
+  PROCESSING
+  COMPLETED
+  FAILED
+}
+
+enum AiModelProvider {
+  OPENAI
+  GEMINI
+  ANTHROPIC
+}
+
 model User {
   id        String   @id @default(cuid())
   email     String   @unique
@@ -90,6 +105,8 @@ model User {
   apiKeys              UserApiKey[]
   writingStyleProfiles WritingStyleProfile[]
   blogGenerationJobs   BlogGenerationJob[]
+  layoutTemplates      BlogLayoutTemplate[]
+  heroBanners          HeroBanner[]
 
   @@map("users")
 }
@@ -139,6 +156,16 @@ model BlogPost {
   // Metadata
   locale      String      @default("ko") // 'ko' or 'en'
   tags        String[]    // Array of tags
+  
+  // SEO Optimization Fields
+  metaDescription String?  @db.VarChar(160)  // SEO meta description (max 160 chars)
+  faqSchema       Json?    // FAQ structured data for rich snippets
+  readingTime     Int?     // Estimated reading time in minutes
+  
+  // AI Quality Management
+  seoScore        Int?     @default(0)  // SEO quality score (0-100)
+  aiDetectionScore Int?    @default(0)  // AI detection risk score (0-100, lower is better)
+  qualityWarning  Boolean  @default(false)  // True if quality check failed after max iterations
   
   // AI Generation metadata
   generatedBy String?     // 'crewai' or 'manual'
@@ -250,6 +277,24 @@ model WritingStyleProfile {
   // Aggregate embedding for quick matching
   embedding   Unsupported("vector(1536)")?
   
+  // AI Model preference
+  preferredAiModel AiModelProvider @default(OPENAI)
+  
+  // AI Agent configuration (stored on model)
+  openerAi    String  @default("openai")   // opener AI provider
+  researchAi  String  @default("perplexity") // research AI provider
+  editorAi    String  @default("openai")   // editor AI provider
+  
+  // Version management
+  version        Int      @default(1)
+  versionHistory Json?    // Array<{version, snapshot, changes, timestamp, userId}>
+  
+  // Marketplace & Sharing
+  isPublic       Boolean  @default(false)
+  usageCount     Int      @default(0)
+  previewSample  String?  @db.Text
+  previewGeneratedAt DateTime?
+  
   isActive    Boolean  @default(true)
   sampleCount Int      @default(0)
   
@@ -260,6 +305,7 @@ model WritingStyleProfile {
   samples     WritingSample[]
   
   @@index([userId, isActive])
+  @@index([isPublic, isActive])
   @@map("writing_style_profiles")
 }
 
@@ -281,12 +327,25 @@ model WritingSample {
   // Vector embedding for RAG
   embedding   Unsupported("vector(1536)")?
   
+  // Processing status for real-time tracking
+  status         SampleStatus @default(PENDING)
+  progress       Int          @default(0)  // 0-100
+  processingStep String?      // Current step description
+  errorMessage   String?      @db.Text
+  retryCount     Int          @default(0)  // Max 3 retries
+  
+  // Quality validation
+  qualityScore     Int?       // 0-100
+  validationIssues Json?      // { issues: string[], warnings: string[] }
+  
   // Quality/relevance
   isApproved  Boolean             @default(true)
   
   createdAt   DateTime            @default(now())
+  processedAt DateTime?
   
   @@index([profileId, isApproved])
+  @@index([profileId, status])
   @@map("writing_samples")
 }
 
@@ -345,4 +404,67 @@ model UserBlogLink {
   
   @@index([userId, platform])
   @@map("user_blog_links")
+}
+
+// ==========================================
+// Blog Layout Template System
+// ==========================================
+
+model BlogLayoutTemplate {
+  id          String   @id @default(cuid())
+  userId      String?  // null = system default template
+  user        User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  name        String   @db.VarChar(50)
+  description String?  @db.VarChar(200)
+  
+  // Layout instruction for AI (replaces hardcoded structure in writer_stage)
+  promptInstruction String @db.Text
+  
+  // Template metadata
+  isSystem    Boolean  @default(false)  // System templates cannot be edited/deleted
+  isPublic    Boolean  @default(false)  // Public templates can be forked by others
+  isActive    Boolean  @default(true)
+  
+  // Usage tracking
+  usageCount  Int      @default(0)
+  
+  // Test preview
+  previewSample      String?   @db.Text
+  previewGeneratedAt DateTime?
+  
+  // Sorting
+  sortOrder   Int      @default(0)
+  
+  // Version management
+  version        Int      @default(1)
+  versionHistory Json?    // Array<{version, snapshot, changes, timestamp, userId}>
+  
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  @@index([userId, isActive])
+  @@index([isPublic, isActive])
+  @@map("blog_layout_templates")
+}
+
+// ==========================================
+// Homepage Management - Hero Banner
+// ==========================================
+
+model HeroBanner {
+  id          String   @id @default(cuid())
+  imageUrl    String
+  linkUrl     String?
+  title       String?
+  description String?
+  isActive    Boolean  @default(true)
+  sortOrder   Int      @default(0)
+  createdBy   String
+  user        User     @relation(fields: [createdBy], references: [id])
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([isActive, sortOrder])
+  @@map("hero_banners")
 }

@@ -10,7 +10,6 @@ import { LogoCluster } from '@/components/logo-cluster'
 import { LogoTimeline } from '@/components/logo-timeline'
 import { Map } from '@/components/map'
 import { Screenshot } from '@/components/screenshot'
-import { Testimonials } from '@/components/testimonials'
 import { Heading, Subheading } from '@/components/text'
 import { useTranslation } from '@/hooks/useTranslation'
 import { useEffect } from 'react'
@@ -182,7 +181,6 @@ export default function Home() {
         </div>
         <DarkBentoSection />
       </main>
-      <Testimonials />
       <Footer />
     </div>
   )

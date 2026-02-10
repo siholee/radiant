@@ -21,7 +21,6 @@ interface ApiKey {
 
 export default function ApiKeysPage() {
   const router = useRouter()
-  const [user, setUser] = useState<any>(null)
   const [apiKeys, setApiKeys] = useState<ApiKey[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
@@ -34,24 +33,8 @@ export default function ApiKeysPage() {
   const [submitting, setSubmitting] = useState(false)
 
   useEffect(() => {
-    checkAuth()
     loadApiKeys()
   }, [])
-
-  const checkAuth = async () => {
-    try {
-      const res = await fetch('/api/auth/me')
-      if (!res.ok) {
-        router.push('/ko/login')
-        return
-      }
-      const data = await res.json()
-      setUser(data.user)
-      setLoading(false)
-    } catch (err) {
-      router.push('/ko/login')
-    }
-  }
 
   const loadApiKeys = async () => {
     try {
@@ -62,6 +45,8 @@ export default function ApiKeysPage() {
       }
     } catch (err) {
       console.error('Failed to load API keys:', err)
+    } finally {
+      setLoading(false)
     }
   }
 
@@ -307,7 +292,7 @@ export default function ApiKeysPage() {
 
         {/* Info Box */}
         <div className="mt-6 bg-blue-50 border border-blue-200 rounded-lg p-4">
-          <h3 className="text-sm font-medium text-blue-800">💡 안전한 API 키 관리</h3>
+          <h3 className="text-sm font-medium text-blue-800">안전한 API 키 관리</h3>
           <ul className="mt-2 text-sm text-blue-700 list-disc list-inside space-y-1">
             <li>모든 API 키는 AES-256-GCM으로 암호화되어 저장됩니다</li>
             <li>API 키는 한 번 저장되면 다시 확인할 수 없습니다</li>

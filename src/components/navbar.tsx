@@ -54,22 +54,9 @@ function DesktopNav() {
     { href: `/${locale}/marketing`, label: t('nav.pricing') },
   ]
 
-  const authLinks = user ? [
-    { href: `/${locale}/blog-creator`, label: 'Blog Creator' },
-  ] : []
-
   return (
     <nav className="relative hidden lg:flex items-center gap-2">
       {publicLinks.map(({ href, label }) => (
-        <Link
-          key={href}
-          href={href}
-          className="relative flex items-center px-4 py-2 text-base font-medium text-gray-950 bg-blend-multiply transition-colors before:absolute before:inset-0 before:rounded-lg before:bg-black/0 before:transition-colors data-hover:before:bg-black/[0.025]"
-        >
-          {label}
-        </Link>
-      ))}
-      {authLinks.map(({ href, label }) => (
         <Link
           key={href}
           href={href}
@@ -90,12 +77,12 @@ function DesktopNav() {
                 <MenuItem>
                   {({ focus }) => (
                     <Link
-                      href={`/${locale}/api-keys`}
+                      href={`/${locale}/mypage`}
                       className={`${
                         focus ? 'bg-gray-100' : ''
                       } block px-4 py-2 text-sm text-gray-700`}
                     >
-                      API Keys 관리
+                      {t('nav.mypage')}
                     </Link>
                   )}
                 </MenuItem>
@@ -169,8 +156,7 @@ function MobileNav() {
   ]
 
   const authLinks = user ? [
-    { href: `/${locale}/blog-creator`, label: 'Blog Creator' },
-    { href: `/${locale}/api-keys`, label: 'API Keys 관리' },
+    { href: `/${locale}/mypage`, label: t('nav.mypage') },
   ] : []
 
   const allLinks = [...publicLinks, ...authLinks]

@@ -3,7 +3,20 @@
     "company": "웹 빌더",
     "pricing": "마케팅",
     "login": "로그인",
-    "logout": "로그아웃"
+    "logout": "로그아웃",
+    "mypage": "마이페이지"
+  },
+  "mypage": {
+    "title": "마이페이지",
+    "dashboard": "홈",
+    "settings": "환경설정",
+    "apiKeys": "API 키 관리",
+    "blogCreator": "블로그 크리에이터",
+    "layoutTemplates": "레이아웃 관리",
+    "writingModels": "모델 관리",
+    "modelManagement": "모델 관리",
+    "welcome": "환영합니다",
+    "comingSoon": "곧 공개됩니다"
   },
   "footer": {
     "cta": {

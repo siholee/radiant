@@ -37,7 +37,7 @@
   },
   "promotion": {
     "subheading": "Promotion",
-    "heading": "Radient만의 특별한 패키지로<br/>더 큰 혜택을 누리세요",
+    "heading": "유라시스만의 특별한 패키지로<br/>더 큰 혜택을 누려보세요",
     "automation": {
       "eyebrow": "AUTOMATION",
       "title": "AI 자동화 시스템 구축",
@@ -55,7 +55,7 @@
     },
     "bundle": {
       "eyebrow": "BUNDLE",
-      "title": "홈페이지 제작 특별 할인",
+      "title": "특별 결합 할인",
       "description": "홈페이지 제작 솔루션 동시 신청 시 패키지 15% 특별 할인 혜택을 받으세요."
     }
   }

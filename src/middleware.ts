@@ -8,14 +8,18 @@ import type { SessionData, SessionUser } from './lib/auth/types'
 const protectedRoutes = [
   '/api/graphql', // GraphQL endpoint
   '/[lang]/dashboard', // Employee dashboard (any language)
+  '/[lang]/mypage', // User mypage (any language)
   '/api/api-keys', // API key management
   '/api/blog-generator', // Blog generation
+  '/api/blog-layout', // Blog layout template management
   '/api/writing-style', // Writing style management
+  '/api/auth/update-profile', // User profile update
 ]
 
 // Admin-only routes
 const adminRoutes = [
   '/api/crewai/generate', // CrewAI blog generation (legacy)
+  '/api/admin', // Admin management APIs
 ]
 
 // Routes that require ADMIN or EMPLOYEE role

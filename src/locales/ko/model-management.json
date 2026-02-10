@@ -1,0 +1,142 @@
+{
+  "nav": {
+    "title": "모델 관리",
+    "subtitle": "AI 문체 프로필 관리"
+  },
+  "profiles": {
+    "title": "문체 프로필",
+    "description": "AI가 학습할 문체 프로필을 생성하고 관리합니다.",
+    "create": "새 프로필 만들기",
+    "edit": "프로필 수정",
+    "delete": "프로필 삭제",
+    "deleteConfirm": "이 프로필을 삭제하시겠습니까? 모든 학습 데이터가 함께 삭제됩니다.",
+    "empty": "아직 생성된 프로필이 없습니다.",
+    "emptyDescription": "새 프로필을 만들어 AI 문체 학습을 시작하세요.",
+    "card": {
+      "samples": "샘플 {count}개",
+      "version": "버전 {version}",
+      "active": "활성",
+      "inactive": "비활성",
+      "createdBy": "생성자: {name}",
+      "updatedAt": "최근 수정: {date}"
+    },
+    "form": {
+      "name": "프로필 이름",
+      "namePlaceholder": "예: 기업 블로그 스타일",
+      "description": "설명 (선택)",
+      "descriptionPlaceholder": "이 프로필의 특징을 설명해주세요",
+      "aiModel": "베이스 AI 모델",
+      "aiModelDescription": "블로그 생성 시 사용할 기본 AI 모델을 선택합니다.",
+      "tone": "톤",
+      "tonePlaceholder": "예: 친근함, 전문적, 캐주얼",
+      "vocabulary": "어휘",
+      "vocabularyPlaceholder": "예: 전문용어 사용, 쉬운 표현",
+      "structure": "구조",
+      "structurePlaceholder": "예: 짧은 문단, 리스트 활용"
+    },
+    "aiModels": {
+      "OPENAI": "OpenAI (GPT-4)",
+      "GEMINI": "Google Gemini",
+      "ANTHROPIC": "Anthropic Claude"
+    }
+  },
+  "samples": {
+    "title": "학습 데이터",
+    "description": "프로필에 학습시킬 텍스트 샘플을 관리합니다.",
+    "upload": "파일 업로드",
+    "uploadMultiple": "여러 파일 업로드",
+    "uploadDescription": "TXT 또는 MD 파일을 드래그하거나 클릭하여 업로드하세요 (최대 10개)",
+    "addUrl": "URL 추가",
+    "addUrlDescription": "네이버 블로그 또는 워드프레스 URL을 입력하세요",
+    "addText": "텍스트 직접 입력",
+    "urlPlaceholder": "https://blog.naver.com/... 또는 https://yoursite.wordpress.com/...",
+    "empty": "아직 학습 데이터가 없습니다.",
+    "emptyDescription": "파일을 업로드하거나 URL을 추가하여 학습 데이터를 등록하세요.",
+    "card": {
+      "words": "{count}자",
+      "platform": "출처: {platform}",
+      "quality": "품질: {score}점",
+      "processing": "처리 중... {progress}%",
+      "completed": "완료",
+      "failed": "실패",
+      "retry": "재시도",
+      "retryCount": "재시도 {count}/3",
+      "delete": "삭제",
+      "approve": "승인",
+      "unapprove": "승인 취소"
+    },
+    "status": {
+      "PENDING": "대기 중",
+      "PROCESSING": "처리 중",
+      "COMPLETED": "완료",
+      "FAILED": "실패"
+    },
+    "validation": {
+      "tooShort": "텍스트가 너무 짧습니다 (최소 100자)",
+      "tooLong": "텍스트가 너무 깁니다 (최대 500,000자)",
+      "unsupportedLanguage": "지원하지 않는 언어입니다 (한국어/영어만 지원)",
+      "tooManySpecialChars": "특수문자가 너무 많습니다",
+      "duplicate": "이미 등록된 콘텐츠입니다",
+      "duplicateUrl": "이미 등록된 URL입니다"
+    }
+  },
+  "versions": {
+    "title": "버전 히스토리",
+    "description": "프로필 변경 이력을 확인하고 이전 버전으로 롤백할 수 있습니다.",
+    "current": "현재 버전",
+    "rollback": "이 버전으로 롤백",
+    "rollbackConfirm": "버전 {version}으로 롤백하시겠습니까?",
+    "rollbackSuccess": "버전 {version}으로 롤백되었습니다.",
+    "changes": "변경 사항",
+    "noHistory": "버전 히스토리가 없습니다.",
+    "timestamp": "{date}에 수정됨"
+  },
+  "test": {
+    "title": "테스트 생성",
+    "description": "현재 프로필 설정으로 짧은 샘플 텍스트를 생성해봅니다.",
+    "prompt": "테스트 주제",
+    "promptPlaceholder": "예: 봄철 피크닉 준비 방법",
+    "generate": "테스트 생성",
+    "generating": "생성 중...",
+    "result": "생성 결과",
+    "resultDescription": "학습된 문체가 적용된 샘플 텍스트입니다.",
+    "metrics": {
+      "wordCount": "글자 수",
+      "aiDetection": "AI 감지 점수",
+      "aiDetectionPassed": "통과",
+      "aiDetectionFailed": "주의 필요",
+      "model": "사용 모델"
+    }
+  },
+  "actions": {
+    "save": "저장",
+    "cancel": "취소",
+    "confirm": "확인",
+    "close": "닫기",
+    "add": "추가",
+    "remove": "제거",
+    "edit": "수정",
+    "refresh": "새로고침"
+  },
+  "messages": {
+    "saveSuccess": "저장되었습니다.",
+    "saveFailed": "저장에 실패했습니다.",
+    "deleteSuccess": "삭제되었습니다.",
+    "deleteFailed": "삭제에 실패했습니다.",
+    "uploadSuccess": "{count}개 파일이 업로드되었습니다.",
+    "uploadPartial": "{success}개 성공, {failed}개 실패",
+    "uploadFailed": "업로드에 실패했습니다.",
+    "urlAddSuccess": "URL에서 콘텐츠를 가져왔습니다.",
+    "urlAddFailed": "URL 처리에 실패했습니다.",
+    "retrySuccess": "재처리를 시작했습니다.",
+    "retryFailed": "재처리를 시작할 수 없습니다.",
+    "noApiKey": "API 키가 등록되어 있지 않습니다. API 키 관리에서 먼저 등록해주세요.",
+    "maxRetriesExceeded": "최대 재시도 횟수(3회)를 초과했습니다."
+  },
+  "errors": {
+    "loadFailed": "데이터를 불러오는데 실패했습니다.",
+    "unauthorized": "접근 권한이 없습니다.",
+    "notFound": "찾을 수 없습니다.",
+    "serverError": "서버 오류가 발생했습니다. 잠시 후 다시 시도해주세요."
+  }
+}

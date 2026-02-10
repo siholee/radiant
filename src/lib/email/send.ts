@@ -156,3 +156,83 @@ export async function sendAccountLockedEmail(
     html,
   })
 }
+
+/**
+ * Send user invite email (admin invited a new user)
+ */
+export async function sendUserInviteEmail(
+  email: string,
+  token: string,
+  name: string
+): Promise<{ success: boolean; error?: string }> {
+  const inviteUrl = `${APP_URL}/ko/reset-password?token=${token}&invite=true`
+  
+  const html = `
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <meta charset="utf-8">
+      <title>${APP_NAME} 초대</title>
+    </head>
+    <body style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; padding: 40px; max-width: 600px; margin: 0 auto;">
+      <h1 style="color: #333;">${APP_NAME}에 초대되었습니다!</h1>
+      <p style="color: #666; font-size: 16px;">안녕하세요, ${name}님!</p>
+      <p style="color: #666; font-size: 16px;">관리자가 ${APP_NAME} 서비스에 초대했습니다. 아래 버튼을 클릭하여 계정을 활성화하고 비밀번호를 설정해주세요:</p>
+      <div style="margin: 30px 0;">
+        <a href="${inviteUrl}" style="background-color: #000; color: #fff; padding: 12px 24px; text-decoration: none; border-radius: 6px; display: inline-block;">계정 활성화</a>
+      </div>
+      <p style="color: #999; font-size: 14px;">버튼이 작동하지 않는 경우, 아래 링크를 복사하여 브라우저에 붙여넣으세요:</p>
+      <p style="color: #999; font-size: 14px; word-break: break-all;">${inviteUrl}</p>
+      <p style="color: #999; font-size: 14px;">이 링크는 7일 동안 유효합니다.</p>
+      <hr style="border: none; border-top: 1px solid #eee; margin: 30px 0;">
+      <p style="color: #999; font-size: 12px;">질문이 있으시면 관리자에게 문의해주세요.</p>
+    </body>
+    </html>
+  `
+  
+  return sendEmail({
+    to: email,
+    subject: `[${APP_NAME}] 서비스 초대`,
+    html,
+  })
+}
+
+/**
+ * Send admin-initiated password reset email
+ */
+export async function sendAdminPasswordResetEmail(
+  email: string,
+  token: string,
+  name: string
+): Promise<{ success: boolean; error?: string }> {
+  const resetUrl = `${APP_URL}/ko/reset-password?token=${token}`
+  
+  const html = `
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <meta charset="utf-8">
+      <title>비밀번호 재설정</title>
+    </head>
+    <body style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; padding: 40px; max-width: 600px; margin: 0 auto;">
+      <h1 style="color: #333;">비밀번호 재설정 안내</h1>
+      <p style="color: #666; font-size: 16px;">안녕하세요, ${name}님!</p>
+      <p style="color: #666; font-size: 16px;">관리자가 비밀번호 재설정을 요청했습니다. 아래 버튼을 클릭하여 새 비밀번호를 설정해주세요:</p>
+      <div style="margin: 30px 0;">
+        <a href="${resetUrl}" style="background-color: #000; color: #fff; padding: 12px 24px; text-decoration: none; border-radius: 6px; display: inline-block;">비밀번호 재설정</a>
+      </div>
+      <p style="color: #999; font-size: 14px;">버튼이 작동하지 않는 경우, 아래 링크를 복사하여 브라우저에 붙여넣으세요:</p>
+      <p style="color: #999; font-size: 14px; word-break: break-all;">${resetUrl}</p>
+      <p style="color: #999; font-size: 14px;">이 링크는 24시간 동안 유효합니다.</p>
+      <hr style="border: none; border-top: 1px solid #eee; margin: 30px 0;">
+      <p style="color: #999; font-size: 12px;">본인이 요청하지 않은 경우, 관리자에게 문의해주세요.</p>
+    </body>
+    </html>
+  `
+  
+  return sendEmail({
+    to: email,
+    subject: `[${APP_NAME}] 비밀번호 재설정 안내`,
+    html,
+  })
+}

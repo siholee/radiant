@@ -1,0 +1,142 @@
+{
+  "nav": {
+    "title": "Model Management",
+    "subtitle": "AI Writing Style Profile Management"
+  },
+  "profiles": {
+    "title": "Writing Style Profiles",
+    "description": "Create and manage writing style profiles for AI learning.",
+    "create": "Create New Profile",
+    "edit": "Edit Profile",
+    "delete": "Delete Profile",
+    "deleteConfirm": "Are you sure you want to delete this profile? All training data will be deleted as well.",
+    "empty": "No profiles created yet.",
+    "emptyDescription": "Create a new profile to start AI writing style training.",
+    "card": {
+      "samples": "{count} samples",
+      "version": "Version {version}",
+      "active": "Active",
+      "inactive": "Inactive",
+      "createdBy": "Created by: {name}",
+      "updatedAt": "Last updated: {date}"
+    },
+    "form": {
+      "name": "Profile Name",
+      "namePlaceholder": "e.g., Corporate Blog Style",
+      "description": "Description (optional)",
+      "descriptionPlaceholder": "Describe the characteristics of this profile",
+      "aiModel": "Base AI Model",
+      "aiModelDescription": "Select the default AI model to use for blog generation.",
+      "tone": "Tone",
+      "tonePlaceholder": "e.g., friendly, professional, casual",
+      "vocabulary": "Vocabulary",
+      "vocabularyPlaceholder": "e.g., technical terms, simple expressions",
+      "structure": "Structure",
+      "structurePlaceholder": "e.g., short paragraphs, use of lists"
+    },
+    "aiModels": {
+      "OPENAI": "OpenAI (GPT-4)",
+      "GEMINI": "Google Gemini",
+      "ANTHROPIC": "Anthropic Claude"
+    }
+  },
+  "samples": {
+    "title": "Training Data",
+    "description": "Manage text samples to train the profile.",
+    "upload": "Upload File",
+    "uploadMultiple": "Upload Multiple Files",
+    "uploadDescription": "Drag and drop or click to upload TXT or MD files (max 10)",
+    "addUrl": "Add URL",
+    "addUrlDescription": "Enter a Naver Blog or WordPress URL",
+    "addText": "Enter Text Directly",
+    "urlPlaceholder": "https://blog.naver.com/... or https://yoursite.wordpress.com/...",
+    "empty": "No training data yet.",
+    "emptyDescription": "Upload files or add URLs to register training data.",
+    "card": {
+      "words": "{count} chars",
+      "platform": "Source: {platform}",
+      "quality": "Quality: {score}",
+      "processing": "Processing... {progress}%",
+      "completed": "Completed",
+      "failed": "Failed",
+      "retry": "Retry",
+      "retryCount": "Retry {count}/3",
+      "delete": "Delete",
+      "approve": "Approve",
+      "unapprove": "Unapprove"
+    },
+    "status": {
+      "PENDING": "Pending",
+      "PROCESSING": "Processing",
+      "COMPLETED": "Completed",
+      "FAILED": "Failed"
+    },
+    "validation": {
+      "tooShort": "Text is too short (minimum 100 characters)",
+      "tooLong": "Text is too long (maximum 500,000 characters)",
+      "unsupportedLanguage": "Unsupported language (Korean/English only)",
+      "tooManySpecialChars": "Too many special characters",
+      "duplicate": "This content is already registered",
+      "duplicateUrl": "This URL is already registered"
+    }
+  },
+  "versions": {
+    "title": "Version History",
+    "description": "View profile change history and rollback to previous versions.",
+    "current": "Current Version",
+    "rollback": "Rollback to this version",
+    "rollbackConfirm": "Are you sure you want to rollback to version {version}?",
+    "rollbackSuccess": "Rolled back to version {version}.",
+    "changes": "Changes",
+    "noHistory": "No version history available.",
+    "timestamp": "Modified on {date}"
+  },
+  "test": {
+    "title": "Test Generation",
+    "description": "Generate a short sample text with current profile settings.",
+    "prompt": "Test Topic",
+    "promptPlaceholder": "e.g., How to prepare for a spring picnic",
+    "generate": "Generate Test",
+    "generating": "Generating...",
+    "result": "Generation Result",
+    "resultDescription": "Sample text with the trained writing style applied.",
+    "metrics": {
+      "wordCount": "Word Count",
+      "aiDetection": "AI Detection Score",
+      "aiDetectionPassed": "Passed",
+      "aiDetectionFailed": "Needs Attention",
+      "model": "Model Used"
+    }
+  },
+  "actions": {
+    "save": "Save",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "close": "Close",
+    "add": "Add",
+    "remove": "Remove",
+    "edit": "Edit",
+    "refresh": "Refresh"
+  },
+  "messages": {
+    "saveSuccess": "Saved successfully.",
+    "saveFailed": "Failed to save.",
+    "deleteSuccess": "Deleted successfully.",
+    "deleteFailed": "Failed to delete.",
+    "uploadSuccess": "{count} files uploaded successfully.",
+    "uploadPartial": "{success} succeeded, {failed} failed",
+    "uploadFailed": "Upload failed.",
+    "urlAddSuccess": "Content fetched from URL.",
+    "urlAddFailed": "Failed to process URL.",
+    "retrySuccess": "Reprocessing started.",
+    "retryFailed": "Cannot start reprocessing.",
+    "noApiKey": "No API key registered. Please register one in API Key Management first.",
+    "maxRetriesExceeded": "Maximum retry count (3) exceeded."
+  },
+  "errors": {
+    "loadFailed": "Failed to load data.",
+    "unauthorized": "Access denied.",
+    "notFound": "Not found.",
+    "serverError": "Server error occurred. Please try again later."
+  }
+}
