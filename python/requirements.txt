@@ -1,25 +1,31 @@
-# CrewAI and dependencies
-crewai>=0.1.0
-langchain>=0.1.0
-openai>=1.0.0
+# CrewAI with pinned compatible versions
+crewai==1.9.3
+langchain==0.3.27
+langchain-core==0.3.83
+langchain-text-splitters==0.3.11
+openai==1.83.0
 
-# LangGraph workflow
-langgraph>=0.0.20
-langchain-openai>=0.0.5
-langchain-anthropic>=0.1.0
-langchain-community>=0.0.20
+# Google Gemini
+google-generativeai==0.8.3
+
+# LangGraph workflow - compatible versions
+langgraph==1.0.1
+langgraph-checkpoint==2.1.2
+langchain-openai==0.3.0
+langchain-anthropic==0.3.22
+langchain-community==0.3.8
 
 # Vector Store / RAG
-langchain-postgres>=0.0.1
-pgvector>=0.2.0
-psycopg2-binary>=2.9.9
+langchain-postgres==0.0.1
+pgvector==0.2.5
+psycopg2-binary==2.9.11
 
-# Web scraping (fallback)
-httpx>=0.26.0
-beautifulsoup4>=4.12.0
+# Web scraping
+httpx==0.28.1
+beautifulsoup4==4.14.3
 
 # Environment
-python-dotenv>=1.0.0
+python-dotenv==1.2.1
 
 # Optional: Add other dependencies your CrewAI script needs
 # requests
