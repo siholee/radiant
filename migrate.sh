@@ -26,5 +26,19 @@ try {
 }
 "
 
+# Run database seed (creates ADMIN account if not exists)
+echo "🌱 Running database seed..."
+node -e "
+const { execSync } = require('child_process');
+try {
+  execSync('npx tsx prisma/seed.ts', { 
+    stdio: 'inherit',
+    env: { ...process.env, DATABASE_URL: process.env.DATABASE_URL }
+  });
+} catch (error) {
+  console.log('⚠️  Seed skipped or already completed');
+}
+"
+
 echo "🚀 Starting application..."
 exec "$@"
