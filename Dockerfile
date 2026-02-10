@@ -58,6 +58,10 @@ COPY --from=builder --chown=nextjs:nodejs /app/node_modules/prisma ./node_module
 COPY --from=python-base --chown=nextjs:nodejs /python /app/python
 COPY --from=python-base /usr/local/lib/python3.11/site-packages /usr/local/lib/python3.11/site-packages
 
+# Copy migration script
+COPY --chown=nextjs:nodejs migrate.sh ./migrate.sh
+RUN chmod +x migrate.sh
+
 USER nextjs
 
 EXPOSE 3000
@@ -69,4 +73,4 @@ ENV HOSTNAME="0.0.0.0"
 HEALTHCHECK --interval=30s --timeout=10s --start-period=40s --retries=3 \
   CMD node -e "require('http').get('http://localhost:3000/api/health', (r) => {process.exit(r.statusCode === 200 ? 0 : 1)})"
 
-CMD ["node", "server.js"]
+CMD ["sh", "-c", "./migrate.sh && node server.js"]
