@@ -20,7 +20,7 @@ async function main() {
       name: 'System Administrator',
       password: adminPassword,
       role: 'ADMIN',
-      emailVerified: new Date(),
+      emailVerified: true,
     },
   });
 
